@@ -1,6 +1,6 @@
 // Page d'accueil : ouverture marquée au fer, hero, EP, lecteur au coin du feu,
 // discographie sur planches, route de l'histoire, W-Team, vidéos, concerts, merch, contact.
-import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, ses, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, euro, fineHover, showHeader } from './core.js';
+import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, ses, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, euro, fineHover, showHeader, getLenis } from './core.js';
 import { releases, merch, SHOP_URL } from '../data/catalogue.js';
 import { createEmbers } from './embers.js';
 import { Player } from './audio.js';
@@ -8,13 +8,15 @@ import { Player } from './audio.js';
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
 const mm = (q) => window.matchMedia(q).matches;
+// avec une souris, l'épinglage par transformation évite les sauts de mise en page (CLS) ; au doigt, l'épinglage natif reste plus stable
+const PIN_TYPE = window.matchMedia('(hover: hover) and (pointer: fine)').matches ? 'transform' : 'fixed';
 const isMobileArt = () => mm('(max-aspect-ratio: 4/5)');
 
 // Position d'un point d'une image affichée en object-fit: cover, en fraction du conteneur.
-function coverPoint(box, iw, ih, u, v) {
+function coverPoint(box, iw, ih, u, v, px = 0.5, py = 0.5) {
   const w = box.clientWidth, h = box.clientHeight;
   const s = Math.max(w / iw, h / ih), dw = iw * s, dh = ih * s;
-  return [((w - dw) / 2 + u * dw) / w, ((h - dh) / 2 + v * dh) / h];
+  return [((w - dw) * px + u * dw) / w, ((h - dh) * py + v * dh) / h];
 }
 
 /* ---------- Contenus générés depuis les fichiers de données ---------- */
@@ -23,7 +25,7 @@ function renderDisco() {
   const rots = [-2, 1.6, -1.2, 2.2, -1.8, 1.2, -2.4];
   $('#discoRail').innerHTML = releases.map((r, i) => {
     const srcset = r.coverSizes.map((w) => `img/${r.cover}-${w}.webp ${w}w`).join(', ');
-    const buy = r.products.map((p) => `<button type="button" class="chip" data-add="${p.id}" ${p.note ? `title="${tt(p.note)}"` : ''}>${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')} <b>${euro(p.price)}</b></button>`).join('');
+    const buy = r.products.map((p) => `<button type="button" class="chip" data-add="${p.id}" aria-label="${t('Ajouter au panier', 'Add to basket')} : ${r.title}, ${p.format === 'cd' ? 'CD' : t('numérique', 'digital')}, ${euro(p.price)}">${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')} <b>${euro(p.price)}</b></button>`).join('');
     const links = Object.entries(r.links).map(([k, u]) => `<a href="${u}" target="_blank" rel="noopener">${LINK_NAMES[k]}</a>`).join('');
     return `<article class="rec" data-card data-rot="${rots[i % rots.length]}">
       <div class="rec__print" style="--rot:${rots[i % rots.length]}deg">
@@ -35,6 +37,7 @@ function renderDisco() {
         <h3 class="rec__title">${r.title}</h3>
         <p class="rec__type">${tt(r.type)}</p>
         <div class="rec__buy">${buy}</div>
+        ${r.products.filter((p) => p.note).map((p) => `<p class="rec__note">${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')} : ${tt(p.note)}</p>`).join('')}
         ${links ? `<div class="rec__links">${links}</div>` : ''}
       </div>
     </article>`;
@@ -53,6 +56,8 @@ function renderNext() {
   box.querySelector('[data-next="city"]').textContent = next.city;
   box.querySelector('[data-next="venue"]').textContent = next.venue;
   box.querySelector('[data-next="when"]').textContent = fmtLong(next);
+  const days = Math.max(0, Math.round((next.at - Date.now()) / 864e5));
+  box.querySelector('[data-next="sr"]').textContent = t(`Dans ${days} jours.`, `In ${days} days.`);
   if (!renderNext.timer) renderNext.timer = countdown(box.querySelector('[data-countdown]'), next.at.getTime());
   $('#homeDates').innerHTML = upcoming.slice(0, 3).map((c) => `<li class="date${c.status === 'annule' ? ' is-cancel' : ''}" data-date="${c.date}">
     <div class="date__d"><b>${fmtDate(c.at, { day: '2-digit' })}</b><span>${fmtDate(c.at, { month: 'short' }).replace('.', '')} ${fmtDate(c.at, { year: 'numeric' })}</span></div>
@@ -73,7 +78,7 @@ function initVideos(player) {
     player.pause();
     const f = document.createElement('iframe');
     f.src = `https://www.youtube-nocookie.com/embed/${b.dataset.yt}?autoplay=1&rel=0`;
-    f.title = 'YouTube'; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+    f.title = `${b.dataset.title || 'Will'}, ${t('vidéo YouTube', 'YouTube video')}`; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
     b.appendChild(f); b.querySelector('.vid__play').remove();
   }));
 }
@@ -113,16 +118,17 @@ function playIntro(onDone) {
     .to('.intro__spark', { scale: 6, opacity: 0, duration: 0.4, ease: 'power2.out' }, 0.28)
     .to('.intro__glow', { opacity: 1, scale: 1, duration: 0.7, ease: 'power3.out' }, 0.25)
     .set(logo, { opacity: 1 }, 0.4)
-    .fromTo(logo, { '--r': '0%' }, { '--r': '90%', duration: 0.95, ease: 'power2.inOut' }, 0.4)
+    .fromTo(logo, { '--r': '0%' }, { '--r': '90%', duration: 0.7, ease: 'power2.inOut' }, 0.35)
     .fromTo(logo, { filter: 'brightness(2.6) sepia(1) saturate(5) hue-rotate(-18deg) drop-shadow(0px 0px 28px rgba(255,140,40,0.9))' },
-      { filter: 'brightness(1) sepia(0) saturate(1) hue-rotate(0deg) drop-shadow(0px 0px 0px rgba(255,140,40,0))', duration: 1, ease: 'power1.inOut' }, 1.15)
-    .to('.intro__glow', { opacity: 0.25, duration: 0.8 }, 1.3)
-    .add(() => onDone(), 1.85)
-    .to(intro, { opacity: 0, duration: 0.7, ease: 'power2.inOut' }, 1.9)
-    .to('.intro__wood', { scale: 1.08, duration: 0.7, ease: 'power2.in' }, 1.9);
-  const skip = () => tl.progress(1);
-  $('.intro__skip').addEventListener('click', skip);
-  intro.addEventListener('click', skip);
+      { filter: 'brightness(1) sepia(0) saturate(1) hue-rotate(0deg) drop-shadow(0px 0px 0px rgba(255,140,40,0))', duration: 0.75, ease: 'power1.inOut' }, 0.85)
+    .to('.intro__glow', { opacity: 0.25, duration: 0.6 }, 0.95)
+    .add(() => onDone(), 1.35)
+    .to(intro, { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, 1.4)
+    .to('.intro__wood', { scale: 1.08, duration: 0.5, ease: 'power2.in' }, 1.4);
+  const skip = () => { if (tl.progress() < 1) tl.progress(1); off(); };
+  const evs = ['click', 'wheel', 'touchstart', 'keydown'];
+  const off = () => evs.forEach((ev) => window.removeEventListener(ev, skip));
+  evs.forEach((ev) => window.addEventListener(ev, skip, { passive: true }));
 }
 
 /* ---------- Initialisation ---------- */
@@ -131,15 +137,15 @@ let introDone = false; const whenIntro = [];
 
 boot(() => {
   renderDisco(); renderKeys(); renderNext();
-  $$('[data-map="small"]').forEach((m) => renderMap(m)); linkMapToDates();
+  $$('[data-map="small"]').forEach((m) => renderMap(m, { upcomingOnly: true })); linkMapToDates();
   player = new Player($('#audio'));
   initVideos(player);
-  onLang(() => { renderDisco(); renderKeys(); renderNext(); $$('[data-map="small"]').forEach((m) => renderMap(m)); linkMapToDates(); player._ui(); ScrollTrigger && ScrollTrigger.refresh(); });
+  onLang(() => { renderDisco(); renderKeys(); renderNext(); $$('[data-map="small"]').forEach((m) => renderMap(m, { upcomingOnly: true })); linkMapToDates(); player._ui(); ScrollTrigger && ScrollTrigger.refresh(); });
 
   // Emplacements du feu dans les images (mesurés sur les images Grok)
   const placeFire = () => {
     const box = $('.fire');
-    const [fx, fy] = isMobileArt() ? coverPoint(box, 784, 1168, 0.48, 0.70) : coverPoint(box, 1168, 784, 0.655, 0.62);
+    const [fx, fy] = isMobileArt() ? coverPoint(box, 784, 1168, 0.48, 0.70, 0.64) : coverPoint(box, 1168, 784, 0.655, 0.62);
     box.style.setProperty('--fx', (fx * 100).toFixed(2) + '%'); box.style.setProperty('--fy', (fy * 100).toFixed(2) + '%');
     fireEmbers && fireEmbers.setEmitters([{ x: fx, y: fy + 0.02, spread: 0.12, rise: 0.75 }]);
     const hero = $('.hero'), hb = $('.hero__bg');
@@ -156,22 +162,33 @@ boot(() => {
     if (state.calm) return;
     const small = mm('(max-width: 700px)');
     if (!heroEmbers) heroEmbers = await createEmbers($('#heroEmbers'), { count: small ? 320 : 640, share: 0.35, size: 1, webgl: state.webgl });
-    if (!fireEmbers) fireEmbers = await createEmbers($('#fireEmbers'), { count: small ? 420 : 900, size: 1.15, webgl: state.webgl });
-    placeFire(); heroEmbers.start(); fireEmbers.start();
+    placeFire(); heroEmbers.start();
     document.documentElement.dataset.embers = heroEmbers.kind;
+    if (fireEmbers) { fireEmbers.start(); return; }
+    const io = new IntersectionObserver(async (en) => {
+      if (!en[0].isIntersecting || fireEmbers || state.calm) return;
+      io.disconnect();
+      fireEmbers = await createEmbers($('#fireEmbers'), { count: small ? 420 : 900, size: 1.15, webgl: state.webgl });
+      placeFire(); fireEmbers.start();
+    }, { rootMargin: '600px 0px' });
+    io.observe($('.fire'));
   };
   window.addEventListener('resize', placeFire);
   startEmbers();
   onCalm((on) => { if (on) { heroEmbers && heroEmbers.stop(); fireEmbers && fireEmbers.stop(); } else startEmbers(); });
 
   // Le feu suit la musique
-  const wavePath = $('#wavePath'); const fireSec = $('.fire'); let avgBass = 0;
+  const wavePath = $('#wavePath'); const fireSec = $('.fire'); let avgBass = -1, glow = 0;
   const audioLoop = () => {
     const { bass, level, freq } = player.levels();
-    avgBass = avgBass * 0.94 + bass * 0.06;
-    const e = Math.min(1.4, 0.25 + level * 0.55 + Math.max(0, bass - avgBass) * 6);
+    if (avgBass < 0 && bass > 0) avgBass = bass;
+    avgBass = avgBass * 0.97 + bass * 0.03;
+    const pulse = Math.max(0, bass - avgBass) / Math.max(avgBass, 0.12);
+    const e = Math.min(1, 0.15 + level * 0.9 + pulse * 0.9);
     fireEmbers && fireEmbers.setEnergy(e); heroEmbers && heroEmbers.setEnergy(e * 0.6);
-    fireSec.style.setProperty('--energy', e.toFixed(3));
+    // montée rapide, retombée lente : la lueur respire avec la basse sans jamais clignoter
+    glow += (e - glow) * (e > glow ? 0.18 : 0.04);
+    fireSec.style.setProperty('--glow', (0.15 + glow * 0.6).toFixed(3));
     if (freq) {
       const n = 46; let d = '';
       for (let i = 0; i < n; i++) {
@@ -184,7 +201,7 @@ boot(() => {
       wavePath.setAttribute('d', d);
     }
     if (player.playing) requestAnimationFrame(audioLoop);
-    else { fireEmbers && fireEmbers.setEnergy(0); heroEmbers && heroEmbers.setEnergy(0); fireSec.style.setProperty('--energy', 0); }
+    else { fireEmbers && fireEmbers.setEnergy(0); heroEmbers && heroEmbers.setEnergy(0); glow = 0; avgBass = -1; fireSec.style.setProperty('--glow', 0); }
   };
   let wasPlaying = false;
   player.on((p) => { fireSec.classList.toggle('is-live', p.playing && !state.calm); if (p.playing) { requestAnimationFrame(audioLoop); if (!wasPlaying) showHeader(2500); } wasPlaying = p.playing; });
@@ -203,10 +220,18 @@ boot(() => {
     const cleanups = [];
 
     // Titres de section : mots qui montent depuis leur ligne
+    const reveal = {
+      // les mots montent depuis leur ligne
+      rise: (el) => { const s = split(el, 'words'); if (s) gsap.from(s.words, { yPercent: 110, opacity: 0, rotate: 3, duration: 1.1, ease: 'power4.out', stagger: 0.06, scrollTrigger: { trigger: el, start: 'top 86%' } }); },
+      // les lettres se gravent au fer : braise, puis métal refroidi
+      burn: (el) => { const s = split(el, 'words,chars'); if (s) gsap.fromTo(s.chars, { color: '#ffb35c', textShadow: '0 0 18px rgba(255,140,40,.9)', opacity: 0 }, { color: '#f3ead7', textShadow: '0 0 0px rgba(255,140,40,0)', opacity: 1, duration: 0.8, stagger: 0.028, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' }, clearProps: 'color,textShadow' }); },
+      // le titre se dévoile de gauche à droite, comme une planche qu'on découvre
+      plank: (el) => { gsap.fromTo(el, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power3.inOut', scrollTrigger: { trigger: el, start: 'top 86%' }, clearProps: 'clipPath' }); },
+    };
+    const style = { storyTitle: 'burn', contactTitle: 'burn', discoTitle: 'plank', merchTitle: 'plank', proTitle: 'burn' };
     $$('[data-split]').forEach((el) => {
       if (el.classList.contains('hero__tag')) return;
-      const s = split(el, 'words'); if (!s) return;
-      gsap.from(s.words, { yPercent: 110, opacity: 0, rotate: 3, duration: 1.1, ease: 'power4.out', stagger: 0.06, scrollTrigger: { trigger: el, start: 'top 86%' } });
+      (reveal[style[el.id]] || reveal.rise)(el);
     });
 
     // HERO : texte, parallaxe au défilement et à la souris
@@ -217,10 +242,12 @@ boot(() => {
         .from(s ? s.words : '.hero__tag', { yPercent: 100, opacity: 0, duration: 0.9, ease: 'power4.out', stagger: 0.035 }, 0.15)
         .from('.hero__sub, .hero__cta > *', { y: 24, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08 }, 0.5)
         .from('.next', { x: 40, opacity: 0, duration: 1, ease: 'power3.out' }, 0.55)
-        .from('.hero__bg img', { scale: 1.12, duration: 2.4, ease: 'power2.out' }, 0);
+        .from('.hero__print', { y: -60, rotation: 14, opacity: 0, duration: 1.1, ease: 'back.out(1.4)' }, 0.35)
+        .from('.hero__bg img', { scale: 1.06, duration: 2.4, ease: 'power2.out' }, 0);
     };
     if (introDone) heroIn(); else { gsap.set('.hero__inner', { opacity: 0 }); whenIntro.push(() => { gsap.set('.hero__inner', { opacity: 1 }); heroIn(); }); }
     gsap.to('.hero__bg', { yPercent: 14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    gsap.to('.hero__print', { yPercent: -18, rotation: 7, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
     gsap.fromTo('.hero__inner', { y: 0, opacity: 1 }, { y: -90, opacity: 0.1, ease: 'none', immediateRender: false, scrollTrigger: { trigger: '.hero', start: 'center center', end: 'bottom top', scrub: true } });
     if (fineHover) {
       const bx = gsap.quickTo('.hero__bg img', 'x', { duration: 1.4, ease: 'power3' }), by = gsap.quickTo('.hero__bg img', 'y', { duration: 1.4, ease: 'power3' });
@@ -236,7 +263,7 @@ boot(() => {
     heat.style.cssText = 'position:absolute;inset:0;background:radial-gradient(80% 90% at 75% 60%, rgba(217,69,42,.75), rgba(120,30,14,.55) 55%, rgba(20,14,10,.4));mix-blend-mode:multiply;opacity:0;pointer-events:none';
     $('.ep__bg').appendChild(heat); cleanups.push(() => heat.remove());
     const big = mm('(min-width: 900px)');
-    const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: ep, start: 'top top', end: big ? '+=150%' : 'bottom top', pin: big, scrub: 0.6, anticipatePin: 1 } });
+    const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: ep, start: 'top top', end: big ? '+=110%' : 'bottom top', pin: big, pinType: PIN_TYPE, scrub: 0.6 } });
     tl.fromTo('#jewel', { rotationY: -30, rotationX: 10, y: big ? 0 : 0 }, { rotationY: 14, rotationX: 0, duration: 1 }, 0)
       .fromTo('#disc', { xPercent: 0, rotation: 0 }, { xPercent: big ? 46 : 28, rotation: 620, duration: 1 }, 0.05)
       .to(heat, { opacity: 1, duration: 1 }, 0)
@@ -247,7 +274,7 @@ boot(() => {
 
     // Au coin du feu
     gsap.from('.track', { x: -40, opacity: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: '.player', start: 'top 80%' } });
-    gsap.fromTo('.fire__bg img', { scale: 1.12 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.fire', start: 'top bottom', end: 'bottom top', scrub: true } });
+    gsap.fromTo('.fire__bg img', { scale: 1.06 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.fire', start: 'top bottom', end: 'bottom top', scrub: true } });
 
     // Discographie : défilement horizontal sur planches, les tirages se balancent avec la vitesse
     const track = $('#discoTrack'), rail = $('#discoRail');
@@ -258,7 +285,15 @@ boot(() => {
     if (big) {
       track.style.overflow = 'visible';
       const dist = () => Math.max(0, rail.scrollWidth - innerWidth);
-      gsap.to(rail, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '.disco', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1, onUpdate: (self) => swing(self.getVelocity()) } });
+      const railTw = gsap.to(rail, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '.disco', start: 'top top', end: () => '+=' + dist(), pin: true, pinType: PIN_TYPE, scrub: 0.8, invalidateOnRefresh: true, onUpdate: (self) => swing(self.getVelocity()) } });
+      const onFocus = (e) => {
+        const card = e.target.closest('.rec'); const st = railTw.scrollTrigger; if (!card || !st) return;
+        const p = gsap.utils.clamp(0, 1, (card.offsetLeft - innerWidth * 0.3) / Math.max(1, dist()));
+        const y = st.start + p * (st.end - st.start);
+        if (getLenis()) getLenis().scrollTo(y, { immediate: true }); else window.scrollTo(0, y);
+      };
+      rail.addEventListener('focusin', onFocus);
+      cleanups.push(() => rail.removeEventListener('focusin', onFocus));
       cleanups.push(() => { track.style.overflow = ''; });
     } else {
       let lastX = track.scrollLeft;
@@ -278,6 +313,10 @@ boot(() => {
       });
     }
 
+    // Interlude : la phrase de Will s'allume mot à mot avec le défilement
+    const qs = split($('#quoteText'), 'words');
+    if (qs) gsap.fromTo(qs.words, { opacity: 0.16 }, { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: '.quote', start: 'top 75%', end: 'bottom 55%', scrub: true } });
+
     // Histoire : la piste se dessine, chaque étape s'allume comme une lanterne
     const lit = $('#trailLit');
     gsap.fromTo(lit, { strokeDashoffset: () => trailLen }, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '#trail', start: 'top 60%', end: 'bottom 60%', scrub: 0.5, invalidateOnRefresh: true } });
@@ -289,18 +328,18 @@ boot(() => {
     gsap.from('.trail__end', { opacity: 0, y: 30, duration: 1, scrollTrigger: { trigger: '.trail__end', start: 'top 85%' } });
 
     // W-Team : les tirages tombent et se posent
-    gsap.from('.pin', { y: -260, rotation: () => gsap.utils.random(-25, 25), opacity: 0, duration: 1.1, ease: 'bounce.out', stagger: 0.14, scrollTrigger: { trigger: '.board', start: 'top 78%' } });
-    gsap.fromTo('.team__bg img', { scale: 1.15 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.team', start: 'top bottom', end: 'bottom top', scrub: true } });
+    gsap.from('.pin', { y: -120, rotation: () => gsap.utils.random(-14, 14), opacity: 0, duration: 1, ease: 'back.out(1.3)', stagger: 0.12, scrollTrigger: { trigger: '.board', start: 'top 78%' } });
+    gsap.fromTo('.team__bg img', { scale: 1.06 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.team', start: 'top bottom', end: 'bottom top', scrub: true } });
 
     // Vidéos : les volets de la fenêtre s'ouvrent
-    gsap.fromTo('.vid__btn', { clipPath: 'inset(0% 50% 0% 50%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power3.inOut', stagger: 0.15, scrollTrigger: { trigger: '.vids', start: 'top 78%' }, clearProps: 'clipPath' });
+    gsap.fromTo('.vid__btn', { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power3.out', stagger: 0.12, scrollTrigger: { trigger: '.vids', start: 'top 80%' }, clearProps: 'clipPath' });
 
     // Concerts : la route se trace, les dates s'allument
     const road = $('.gigs .map__road');
     if (road) { const L = road.getTotalLength(); gsap.fromTo(road, { strokeDasharray: `${L}`, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 2, ease: 'power2.inOut', scrollTrigger: { trigger: '.gigs__map', start: 'top 75%' }, onComplete: () => { road.style.strokeDasharray = ''; } }); }
-    gsap.from('.gigs .map__pt', { scale: 0, transformOrigin: 'center', duration: 0.7, ease: 'back.out(2.5)', stagger: 0.12, scrollTrigger: { trigger: '.gigs__map', start: 'top 75%' } });
+    gsap.from('.gigs .map__dot', { scale: 0, transformOrigin: '50% 50%', duration: 0.7, ease: 'back.out(2.5)', stagger: 0.12, scrollTrigger: { trigger: '.gigs__map', start: 'top 75%' } });
     gsap.from('#homeDates .date', { x: 50, opacity: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', scrollTrigger: { trigger: '#homeDates', start: 'top 82%' } });
-    gsap.fromTo('.gigs__bg img', { scale: 1.15 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.gigs', start: 'top bottom', end: 'bottom top', scrub: true } });
+    
 
     // Merch : les porte-clés se balancent
     const hangs = $$('.key__hang');

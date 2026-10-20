@@ -6,6 +6,8 @@ import { scenes } from '../data/concerts.js';
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
 const mm = (q) => window.matchMedia(q).matches;
+// avec une souris, l'épinglage par transformation évite les sauts de mise en page (CLS) ; au doigt, l'épinglage natif reste plus stable
+const PIN_TYPE = window.matchMedia('(hover: hover) and (pointer: fine)').matches ? 'transform' : 'fixed';
 
 function coverPoint(box, iw, ih, u, v) {
   const w = box.clientWidth, h = box.clientHeight;
@@ -41,13 +43,19 @@ function render() {
   const idx = (c) => all.indexOf(c);
   $('#upList').innerHTML = upcoming.length ? upcoming.map((c) => gigHTML(c, idx(c), false)).join('') : `<li class="gig"><p>${t('Pas de date annoncée pour le moment. Revenez bientôt.', 'No dates announced yet. Check back soon.')}</p></li>`;
   $('#pastList').innerHTML = past.map((c) => gigHTML(c, idx(c), true)).join('');
-  $('#venues').innerHTML = scenes.map((s) => `<li><b>${s.name}</b><span>${s.city}${s.year ? ' · ' + s.year : ''}</span></li>`).join('');
+  $('#venues').innerHTML = scenes.map((s) => `<li><b>${t(s.name, s.name_en || s.name)}</b><span>${t(s.city, s.city_en || s.city)}${s.year ? ', ' + s.year : ''}</span></li>`).join('');
   const box = $('#cNext');
   if (next) {
     box.querySelector('[data-next="city"]').textContent = next.city;
     box.querySelector('[data-next="venue"]').textContent = next.venue;
     box.querySelector('[data-next="when"]').textContent = fmtLong(next);
     if (!render.timer) render.timer = countdown(box.querySelector('[data-countdown]'), next.at.getTime());
+    const days = Math.max(0, Math.round((next.at - Date.now()) / 864e5));
+    box.querySelector('[data-next="sr"]').textContent = t(`Dans ${days} jours.`, `In ${days} days.`);
+    const i = all.indexOf(next);
+    $('#cNextActs').innerHTML = `<button type="button" class="chip" data-ics="${i}">${t('Ajouter au calendrier', 'Add to calendar')}</button>
+      <a class="chip" href="${mapsUrl(next)}" target="_blank" rel="noopener">${t('Itinéraire', 'Directions')}</a>
+      ${next.booking ? `<a class="chip" href="${next.booking}" target="_blank" rel="noopener">${t('Réserver auprès du lieu', 'Book with the venue')}</a>` : `<button type="button" class="chip" data-book="${i}">${t('Réserver une place (démo)', 'Reserve a seat (demo)')}</button>`}`;
   } else box.hidden = true;
   $$('[data-map="big"]').forEach((m) => renderMap(m, { big: true }));
   linkHover();
@@ -69,8 +77,8 @@ function downloadIcs(c) {
   const end = new Date(c.at.getTime() + 2 * 3600e3);
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Will//Concerts//FR', 'CALSCALE:GREGORIAN', 'BEGIN:VEVENT',
     `UID:will-${c.date}-${c.city.replace(/\W/g, '')}@will-maquette`, `DTSTAMP:${icsDate(new Date())}`, `DTSTART:${icsDate(c.at)}`, `DTEND:${icsDate(end)}`,
-    `SUMMARY:Will en concert – ${c.venue}`, `LOCATION:${c.venue}, ${c.city} (${c.dept}), ${c.country}`,
-    'DESCRIPTION:Country rock. Infos : will (maquette)', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    `SUMMARY:${t('Will en concert', 'Will live')} – ${c.venue}`, `LOCATION:${c.venue}, ${c.city} (${c.dept}), ${c.country}`,
+    `DESCRIPTION:${t('Country rock. Horaires à confirmer auprès du lieu.', 'Country rock. Please check times with the venue.')}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
   a.download = `will-${c.date}-${c.city.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.ics`;
@@ -82,7 +90,7 @@ function downloadIcs(c) {
 function book(c) {
   openModal(`<h2 id="modalTitle">${t('Réserver une place', 'Reserve a seat')}</h2>
     <p><b>${c.city}</b>, ${c.venue}<br>${fmtLong(c)}</p>
-    <p class="demo">${t('Démonstration : aucune réservation n’est envoyée. Les vraies informations de billetterie sont à compléter pour cette date.', 'Demo: no reservation is sent. Real ticketing details for this date are still to be added.')}</p>
+    <p class="demo">${t('Démonstration : aucune réservation n’est envoyée. Les vraies informations de billetterie sont à compléter pour cette date.', 'Demo: no reservation is sent. Real ticketing details for this date are still to be added.')}</p>
     <form id="bookForm" novalidate>
       <div class="field"><label for="bkN">${t('Nombre de places', 'Seats')}</label><input id="bkN" type="number" min="1" max="10" value="2" inputmode="numeric"></div>
       <div class="field"><label for="bkName">${t('Nom', 'Name')}</label><input id="bkName" type="text" autocomplete="name" required></div>
@@ -97,7 +105,7 @@ function book(c) {
       if (!name) { err.textContent = t('Indiquez votre nom.', 'Enter your name.'); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { err.textContent = t('Indiquez une adresse e-mail valide, par exemple nom@exemple.fr.', 'Enter a valid email address, for example name@example.com.'); return; }
       if (!(n >= 1 && n <= 10)) { err.textContent = t('Choisissez entre 1 et 10 places.', 'Choose between 1 and 10 seats.'); return; }
-      body.innerHTML = `<h2 id="modalTitle">${t('Place réservée (démo)', 'Seat reserved (demo)')}</h2><p>${t(`${n} place${n > 1 ? 's' : ''} pour ${c.city}, le ${fmtLong(c)}.`, `${n} seat${n > 1 ? 's' : ''} for ${c.city}, ${fmtLong(c)}.`)}</p><p class="demo">${t('Rien n’a été envoyé : c’est une maquette.', 'Nothing was sent: this is a mock-up.')}</p><button type="button" class="btn btn--ghost" data-close>${t('Fermer', 'Close')}</button>`;
+      body.innerHTML = `<h2 id="modalTitle">${t('Place réservée (démo)', 'Seat reserved (demo)')}</h2><p>${t(`${n} place${n > 1 ? 's' : ''} pour ${c.city}, le ${fmtLong(c)}.`, `${n} seat${n > 1 ? 's' : ''} for ${c.city}, ${fmtLong(c)}.`)}</p><p class="demo">${t('Rien n’a été envoyé : c’est une maquette.', 'Nothing was sent: this is a mock-up.')}</p><button type="button" class="btn btn--ghost" data-close>${t('Fermer', 'Close')}</button>`;
       body.querySelector('[data-close]').focus();
     });
   });
@@ -177,13 +185,14 @@ class Trails {
         const a = this.at(l, s0), b = this.at(l, s1);
         const near = l.dir > 0 ? 1 - a[2] : a[2];
         const alpha = (1 - k / seg) * (0.25 + 0.75 * Math.min(1, near * 1.4 + 0.15)) * 0.9;
-        c.strokeStyle = `rgba(${l.color.join(',')},${alpha.toFixed(3)})`;
-        c.lineWidth = 0.8 + near * 3.2;
-        c.shadowColor = `rgba(${l.color.join(',')},0.9)`; c.shadowBlur = 10;
-        c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke();
+        const w = 0.8 + near * 3.2;
+        // halo large et doux, puis cœur fin et lumineux (pas de shadowBlur, coûteux à chaque image)
+        c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]);
+        c.strokeStyle = `rgba(${l.color.join(',')},${(alpha * 0.22).toFixed(3)})`; c.lineWidth = w * 5; c.stroke();
+        c.strokeStyle = `rgba(${l.color.join(',')},${alpha.toFixed(3)})`; c.lineWidth = w; c.stroke();
       }
     }
-    c.shadowBlur = 0; c.globalCompositeOperation = 'source-over';
+    c.globalCompositeOperation = 'source-over';
     requestAnimationFrame(this.loop);
   }
 }
@@ -218,7 +227,7 @@ boot(() => {
     }
     gsap.from('#upList .gig', { x: -40, opacity: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: '#upList', start: 'top 82%' } });
     gsap.from('.map--big', { y: 60, rotate: 4, opacity: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '.map--big', start: 'top 85%' } });
-    gsap.from('.map--big .map__pt', { scale: 0, transformOrigin: 'center', stagger: 0.1, duration: 0.7, ease: 'back.out(2.5)', scrollTrigger: { trigger: '.map--big', start: 'top 70%' } });
+    gsap.from('.map--big .map__dot', { scale: 0, transformOrigin: '50% 50%', stagger: 0.1, duration: 0.7, ease: 'back.out(2.5)', scrollTrigger: { trigger: '.map--big', start: 'top 70%' } });
     const road = $('.map--big .map__road');
     if (road) { const L = road.getTotalLength(); gsap.fromTo(road, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 2.2, ease: 'power2.inOut', scrollTrigger: { trigger: '.map--big', start: 'top 70%' }, onComplete: () => { road.style.strokeDasharray = ''; } }); }
     $$('#pastList .stamp').forEach((st) => gsap.from(st, { scale: 2.6, opacity: 0, rotate: -24, duration: 0.5, ease: 'power4.in', scrollTrigger: { trigger: st, start: 'top 85%' } }));
@@ -231,7 +240,7 @@ boot(() => {
     if (mm('(min-width: 900px)')) {
       track.style.overflow = 'visible';
       const dist = () => Math.max(0, rail.scrollWidth - innerWidth + 40);
-      const tl = gsap.timeline({ scrollTrigger: { trigger: '.evening', start: 'top top', end: () => '+=' + (dist() + innerHeight * 0.4), pin: true, scrub: 0.7, invalidateOnRefresh: true, anticipatePin: 1 } });
+      const tl = gsap.timeline({ scrollTrigger: { trigger: '.evening', start: 'top top', end: () => '+=' + (dist() + innerHeight * 0.4), pin: true, pinType: PIN_TYPE, scrub: 0.7, invalidateOnRefresh: true } });
       tl.to(rail, { x: () => -dist(), ease: 'none' }, 0).to('#evLine', { width: '100%', ease: 'none' }, 0);
       $$('.ev figure img').forEach((img) => gsap.fromTo(img, { scale: 1.25 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.evening', start: 'top top', end: () => '+=' + (dist() + innerHeight * 0.4), scrub: true } }));
       cleanups.push(() => { track.style.overflow = ''; });

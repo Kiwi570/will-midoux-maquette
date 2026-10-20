@@ -109,6 +109,12 @@ export class Embers {
   /* ---- version canvas 2D ---- */
   _init2D() {
     this.ctx = this.canvas.getContext('2d');
+    // trois sprites pré-dessinés (chaud, orange, braise) : bien plus léger qu'un dégradé par particule
+    this.sprites = ['255,214,150', '250,140,55', '190,50,20'].map((col) => {
+      const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+      const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, `rgba(${col},1)`); gr.addColorStop(0.35, `rgba(${col},.45)`); gr.addColorStop(1, `rgba(${col},0)`);
+      g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return c;
+    });
     const n = Math.round(this.opts.count * 0.35);
     this.parts = Array.from({ length: n }, () => this._seed2D(Math.random()));
   }
@@ -127,13 +133,11 @@ export class Embers {
       const dx = x - this.mouse[0], dy = y - this.mouse[1], dist = Math.hypot(dx, dy);
       if (dist < 170) { const f = (1 - dist / 170) * 70 * (0.3 + L); x += (dx / (dist || 1)) * f; y += (dy / (dist || 1)) * f; }
       const fade = Math.min(1, L / 0.06) * (1 - Math.max(0, (L - 0.55) / 0.45));
-      const r = p.sz * (1 - L * 0.55) * (1 + this.energy * 0.9) * 2.2;
-      const g = c.createRadialGradient(x, y, 0, x, y, r * 2);
-      const col = L < 0.3 ? '255,210,140' : L < 0.6 ? '250,140,55' : '190,50,20';
-      g.addColorStop(0, `rgba(${col},${0.85 * fade})`); g.addColorStop(1, `rgba(${col},0)`);
-      c.fillStyle = g; c.beginPath(); c.arc(x, y, r * 2, 0, Math.PI * 2); c.fill();
+      const r = p.sz * (1 - L * 0.55) * (1 + this.energy * 0.9) * 4.4;
+      c.globalAlpha = Math.max(0, 0.9 * fade);
+      c.drawImage(this.sprites[L < 0.3 ? 0 : L < 0.6 ? 1 : 2], x - r, y - r, r * 2, r * 2);
     }
-    c.globalCompositeOperation = 'source-over';
+    c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
   }
 }
 

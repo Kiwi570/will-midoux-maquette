@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page introuvable, Will</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#140e0a">
+<link rel="icon" type="image/png" href="/img/favicon-64.png">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+  .lost { position: relative; min-height: 100vh; min-height: 100svh; display: grid; place-items: center; overflow: hidden; text-align: center; padding: 40px var(--gut); background: #0b0a0c; }
+  .lost__bg { position: absolute; inset: 0; }
+  .lost__bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.55); }
+  .lost__bg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 50%, rgba(20, 14, 10, .35), rgba(20, 14, 10, .92)); }
+  .lost__in { position: relative; max-width: 620px; }
+  .lost__logo { width: 150px; margin: 0 auto 28px; }
+  .lost__n { display: block; font-family: var(--f-west); font-size: clamp(4rem, 3rem + 6vw, 8rem); line-height: 1; color: #ffd28a; text-shadow: 0 0 40px rgba(244, 163, 64, .5); }
+  .lost h1 { font-family: var(--f-display); font-size: clamp(2rem, 1.4rem + 3vw, 3.4rem); line-height: 1.05; margin: .3em 0 .4em; color: var(--paper); font-weight: 650; }
+  .lost p { margin: 0 auto 28px; color: var(--kraft); }
+  .lost__cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+</style>
+</head>
+<body>
+<main class="lost">
+  <div class="lost__bg" aria-hidden="true"><img src="/img/grok-concerts-route-nuit-1168.webp" alt=""></div>
+  <div class="lost__in">
+    <img class="lost__logo" src="/img/logo-will-480.webp" alt="Will" width="480" height="267">
+    <span class="lost__n" aria-hidden="true">404</span>
+    <h1>Cette route ne mène nulle part</h1>
+    <p>La page demandée n’existe pas, ou plus. Reprenez la route depuis l’accueil, ou allez voir les prochaines dates.<br><span lang="en">This page does not exist.</span></p>
+    <div class="lost__cta">
+      <a class="btn btn--fire" href="/">Revenir à l’accueil</a>
+      <a class="btn btn--ghost" href="/concerts">Voir les concerts</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

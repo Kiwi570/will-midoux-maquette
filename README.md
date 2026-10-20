@@ -16,3 +16,12 @@ Site statique (HTML, CSS, JavaScript), sans étape de construction, prêt pour V
 - Panier, réservation et demande de date sont simulés : rien n’est envoyé.
 - Le bouton « Mode calme » coupe les animations (activé d’office si le système demande moins d’animations).
 - `?nowebgl` à la fin de l’adresse force la version des braises sans WebGL.
+- Image de partage (réseaux sociaux) : l’adresse `https://will-midoux-maquette.vercel.app/img/og-will.jpg` est écrite dans les trois pages ; à changer si le site prend un autre nom de domaine.
+
+## Version 2 (audit)
+- Polices allégées et polices de secours aux mêmes proportions (pas de saut de texte au chargement).
+- En-tête toujours visible (bouton « Mode calme » accessible en permanence), menu mobile avec tabulation contenue.
+- Le feu réagit vraiment à la musique (lueur qui respire, sans clignotement), mini-lecteur flottant sur téléphone.
+- Section concerts sur papier kraft, citation de Will sur bandeau vert sapin, photo de Will dès l'ouverture.
+- Images d'ambiance signalées comme telles, panier marqué « démonstration », moyens de paiement en texte.
+- Kit presse en haute définition (`img/presse/`), page 404, données structurées des concerts pour Google.

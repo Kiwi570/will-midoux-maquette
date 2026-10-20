@@ -7,16 +7,20 @@
 <meta name="description" content="Toutes les dates de concert de Will : prochaines dates, compte à rebours, carte, infos pratiques.">
 <meta property="og:title" content="Concerts de Will, country rock des Ardennes">
 <meta property="og:description" content="Toutes les dates de concert de Will : prochaines dates, compte à rebours, carte, infos pratiques.">
-<meta property="og:image" content="img/og-will.jpg">
+<meta property="og:image" content="https://will-midoux-maquette.vercel.app/img/og-will.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:type" content="website">
 <meta name="x-title-en" content="Will in concert, country rock from the French Ardennes">
 <meta name="theme-color" content="#140e0a">
 <link rel="icon" type="image/png" href="img/favicon-64.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preload" href="fonts/fraunces-var.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="fonts/work-sans-var.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" as="image" href="img/grok-concerts-route-nuit-1168.webp" media="(min-width: 700px)">
+<link rel="preload" href="fonts/fraunces.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/work-sans.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/rye.woff" as="font" type="font/woff" crossorigin>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{var c=localStorage.getItem('will-calm'),r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(c==='1'||(c===null&&r))d.classList.add('calm');if(sessionStorage.getItem('will-intro')||d.classList.contains('calm'))d.classList.add('no-intro');if(localStorage.getItem('will-lang')==='en')d.lang='en';}catch(e){}})();</script>
+<link rel="preload" as="image" href="img/grok-concerts-route-nuit-1600.webp" media="(min-aspect-ratio: 4/5) and (min-width: 1200px)">
+<link rel="preload" as="image" href="img/grok-concerts-route-nuit-1168.webp" media="(min-aspect-ratio: 4/5) and (max-width: 1199px)">
+<link rel="preload" as="image" href="img/grok-concerts-route-nuit-m-784.webp" media="(max-aspect-ratio: 4/5)">
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="page-concerts" data-page="concerts">
@@ -26,10 +30,11 @@
 
 <header class="hd" id="hd">
   <a class="hd__logo" href="index.html" aria-label="Will, accueil" data-i18n-attr="aria-label:hd.home">
-    <img src="img/logo-will-240.webp" alt="" width="240" height="134">
+    <img decoding="async" src="img/logo-will-240.webp" alt="" width="240" height="134">
   </a>
   <nav class="hd__nav" aria-label="Navigation principale" data-i18n-attr="aria-label:hd.navlabel">
-    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="index.html#ecouter" data-i18n="nav.listen">Écouter</a>
+    <a href="index.html#musique" data-i18n="nav.shop">Disques et boutique</a>
     <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
     <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
     <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
@@ -37,10 +42,10 @@
   </nav>
   <div class="hd__tools">
     <div class="mini" id="mini" hidden>
-      <button class="mini__btn" type="button" id="miniToggle" aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
-      <span class="mini__title" id="miniTitle"></span>
+      <button class="mini__btn" type="button" id="miniToggle" data-mini aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
+      <span class="mini__title" id="miniTitle" data-mini-title></span>
     </div>
-    <div class="lang" role="group" aria-label="Langue">
+    <div class="lang" role="group" aria-label="Langue" data-i18n-attr="aria-label:lang">
       <button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
     <button class="calm-btn" type="button" id="calmBtn" aria-pressed="false" data-i18n="calm">Mode calme</button>
@@ -54,38 +59,45 @@
 
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menu mobile">
-    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="index.html#ecouter" data-i18n="nav.listen">Écouter</a>
+    <a href="index.html#musique" data-i18n="nav.shop">Disques et boutique</a>
     <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
     <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
     <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
     <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
   </nav>
+  <div class="lang menu__lang" role="group" aria-label="Langue" data-i18n-attr="aria-label:lang">
+    <button type="button" data-lang="fr" aria-pressed="true">Français</button><button type="button" data-lang="en" aria-pressed="false">English</button>
+  </div>
 </div>
 
+<noscript><p class="noscript" data-i18n="noscript">Ce site utilise JavaScript pour la discographie, les dates et le panier. Toute la boutique est sur <a href="https://www.helloasso.com/associations/mezcal-nation-prod/boutiques/mezcal-nation-prod-shop">HelloAsso</a> ; contact : mezcalnation@gmail.com.</p></noscript>
 <main id="contenu">
 
 <section class="phero phero--road" aria-labelledby="pTitle">
   <div class="phero__bg" aria-hidden="true">
     <picture>
       <source media="(max-aspect-ratio: 4/5)" srcset="img/grok-concerts-route-nuit-m-784.webp">
-      <img id="roadImg" src="img/grok-concerts-route-nuit-1168.webp" srcset="img/grok-concerts-route-nuit-800.webp 800w, img/grok-concerts-route-nuit-1168.webp 1168w" sizes="100vw" alt="" fetchpriority="high">
+      <img decoding="async" id="roadImg" src="img/grok-concerts-route-nuit-1168.webp" srcset="img/grok-concerts-route-nuit-800.webp 800w, img/grok-concerts-route-nuit-1168.webp 1168w, img/grok-concerts-route-nuit-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high">
     </picture>
   </div>
   <canvas class="trails" id="trails" aria-hidden="true"></canvas>
   <div class="phero__shade" aria-hidden="true"></div>
   <div class="phero__inner wrap">
     <h1 class="phero__title" id="pTitle" data-split data-i18n="c.title">Concerts</h1>
-    <p class="phero__lead" data-i18n="c.lead">Toutes les dates de Will, triées toutes seules : ce qui arrive d’abord, ce qui est passé ensuite.</p>
+    <p class="phero__lead" data-i18n="c.lead">Toutes les dates de Will, de la prochaine à la plus ancienne.</p>
     <div class="cnext" id="cNext">
       <p class="next__label" data-i18n="next.label">Prochain concert</p>
       <p class="cnext__where"><span data-next="city">—</span> <span class="cnext__venue" data-next="venue"></span></p>
       <p class="next__when" data-next="when"></p>
-      <div class="count big-count" data-countdown aria-label="Compte à rebours" data-i18n-attr="aria-label:count.label">
+      <div class="count big-count" data-countdown aria-hidden="true">
         <div><span class="count__n" data-u="d">00</span><span class="count__u" data-i18n="count.d">jours</span></div>
         <div><span class="count__n" data-u="h">00</span><span class="count__u" data-i18n="count.h">heures</span></div>
-        <div><span class="count__n" data-u="m">00</span><span class="count__u" data-i18n="count.m">min</span></div>
-        <div><span class="count__n" data-u="s">00</span><span class="count__u" data-i18n="count.s">s</span></div>
+        <div><span class="count__n" data-u="m">00</span><span class="count__u" data-i18n="count.m">minutes</span></div>
+        <div><span class="count__n" data-u="s">00</span><span class="count__u" data-i18n="count.s">secondes</span></div>
       </div>
+      <p class="sr" data-next="sr"></p>
+      <div class="gig__acts cnext__acts" id="cNextActs"></div>
     </div>
   </div>
 </section>
@@ -93,7 +105,7 @@
 <section class="sec" id="a-venir" aria-labelledby="upTitle">
   <div class="wrap upcoming">
     <div>
-      <h2 class="h2" id="upTitle" data-split data-i18n="c.up">À venir</h2>
+      <h2 class="h2" id="upTitle" data-split data-i18n="c.up">À venir</h2>
       <ol class="gigs-list" id="upList"></ol>
     </div>
     <div class="map" data-map="big"></div>
@@ -109,25 +121,25 @@
   <div class="evening__track" id="evTrack" tabindex="0" aria-label="Déroulé d’une soirée, faire défiler" data-i18n-attr="aria-label:c.evScroll">
     <ol class="evening__rail" id="evRail">
       <li class="ev">
-        <figure><img src="img/grok-soiree-1-balance-784.webp" alt="" loading="lazy"></figure>
+        <figure><img decoding="async" src="img/grok-soiree-1-balance-784.webp" alt="" loading="lazy"></figure>
         <span class="ev__n">1</span>
         <h3 data-i18n="c.ev1t">Les balances</h3>
         <p data-i18n="c.ev1">L’après-midi, le son se règle dans la salle vide.</p>
       </li>
       <li class="ev">
-        <figure><img src="img/grok-soiree-2-portes-784.webp" alt="" loading="lazy"></figure>
+        <figure><img decoding="async" src="img/grok-soiree-2-portes-784.webp" alt="" loading="lazy"></figure>
         <span class="ev__n">2</span>
         <h3 data-i18n="c.ev2t">L’ouverture des portes</h3>
         <p data-i18n="c.ev2">Le public arrive. L’heure d’ouverture de chaque lieu est <span class="todo">à compléter</span>.</p>
       </li>
       <li class="ev">
-        <figure><img src="img/grok-soiree-3-concert-784.webp" alt="" loading="lazy"></figure>
+        <figure class="amb"><img decoding="async" src="img/grok-soiree-3-concert-784.webp" alt="" loading="lazy"><span class="amb__tag" data-i18n="amb">Image d’ambiance</span></figure>
         <span class="ev__n">3</span>
         <h3 data-i18n="c.ev3t">Le concert</h3>
         <p data-i18n="c.ev3">Jusqu’à 90 minutes de compositions, en électrique avec la W-Team, en acoustique ou en duo.</p>
       </li>
       <li class="ev">
-        <figure><img src="img/grok-soiree-4-rappel-784.webp" alt="" loading="lazy"></figure>
+        <figure class="amb"><img decoding="async" src="img/grok-soiree-4-rappel-784.webp" alt="" loading="lazy"><span class="amb__tag" data-i18n="amb">Image d’ambiance</span></figure>
         <span class="ev__n">4</span>
         <h3 data-i18n="c.ev4t">Le rappel</h3>
         <p data-i18n="c.ev4">Et une dernière chanson pour la route. Les CD et porte-clés sont aussi en vente sur la boutique en ligne.</p>
@@ -138,20 +150,20 @@
 
 <section class="sec" id="infos" aria-labelledby="infoTitle">
   <div class="wrap infos">
-    <figure><img src="img/grok-concerts-infos-pratiques-1168.webp" srcset="img/grok-concerts-infos-pratiques-800.webp 800w, img/grok-concerts-infos-pratiques-1168.webp 1168w" sizes="(max-width: 900px) 100vw, 45vw" alt="" loading="lazy"></figure>
+    <figure><img decoding="async" src="img/grok-concerts-infos-pratiques-1168.webp" srcset="img/grok-concerts-infos-pratiques-800.webp 800w, img/grok-concerts-infos-pratiques-1168.webp 1168w" sizes="(max-width: 900px) 100vw, 45vw" alt="" loading="lazy"></figure>
     <div>
       <h2 class="h2" id="infoTitle" data-split data-i18n="c.info">Infos pratiques</h2>
       <dl class="qa">
         <dt data-i18n="c.q1">Horaires</dt>
         <dd data-i18n="c.a1">L’heure indiquée sur chaque date est celle annoncée par Will. En cas de doute, vérifiez auprès du lieu.</dd>
         <dt data-i18n="c.q2">Réservation</dt>
-        <dd data-i18n="c.a2">Certaines soirées se font uniquement sur réservation, comme au Juca Ranch : le lien du lieu est indiqué sur la date. Pour les autres, les informations de billetterie sont <span class="todo">à compléter</span>.</dd>
+        <dd data-i18n="c.a2">Certaines soirées se font uniquement sur réservation, comme au Juca Ranch : le lien du lieu est indiqué sur la date. Pour les autres, les informations de billetterie sont <span class="todo">à compléter</span>.</dd>
         <dt data-i18n="c.q3">Accès et stationnement</dt>
-        <dd data-i18n="c.a3">Le bouton « Itinéraire » ouvre la carte du lieu. Les détails de stationnement de chaque salle sont <span class="todo">à compléter</span>.</dd>
+        <dd data-i18n="c.a3">Le bouton « Itinéraire » ouvre la carte du lieu. Les détails de stationnement de chaque salle sont <span class="todo">à compléter</span>.</dd>
         <dt data-i18n="c.q4">Covoiturage</dt>
         <dd data-i18n="c.a4">Pour partager la route, le plus simple reste l’événement Facebook de chaque date (lien <span class="todo">à compléter</span>).</dd>
         <dt data-i18n="c.q5">Bruit et lumière</dt>
-        <dd data-i18n="c.a5">Concerts amplifiés : pensez aux bouchons d’oreilles, surtout pour les enfants.</dd>
+        <dd data-i18n="c.a5">Concerts amplifiés : pensez aux bouchons d’oreilles, surtout pour les enfants.</dd>
       </dl>
     </div>
   </div>
@@ -163,15 +175,15 @@
     <ol class="gigs-list gigs-list--past" id="pastList"></ol>
     <h3 class="venues__title" data-i18n="c.venues">Ils ont déjà accueilli Will</h3>
     <ul class="venues" id="venues"></ul>
-    <p class="fine" data-i18n="c.venuesNote">D’après le profil Gigstarter de Will. En France, en Belgique et en Allemagne ; avec Mezcal, première partie de Ian Scott en 2017.</p>
+    <p class="fine" data-i18n="c.venuesNote">D’après le profil Gigstarter de Will. En France, en Belgique et en Allemagne ; avec Mezcal, première partie de Ian Scott en 2017.</p>
   </div>
 </section>
 
 <section class="pro" aria-labelledby="proTitle">
-  <div class="pro__img"><img src="img/grok-formule-duo-784.webp" alt="" loading="lazy"></div>
+  <div class="pro__img amb"><img decoding="async" src="img/grok-formule-duo-784.webp" alt="" loading="lazy"><span class="amb__tag" data-i18n="amb">Image d’ambiance</span></div>
   <div class="pro__text">
-    <h2 class="h2" id="proTitle" data-split data-i18n="pro.title2">Une date chez vous ?</h2>
-    <p data-i18n="pro.lead2">Bar, fête de village, festival, rassemblement ou soirée privée : voyez les formules et envoyez une demande.</p>
+    <h2 class="h2" id="proTitle" data-split data-i18n="pro.title2">Une date chez vous ?</h2>
+    <p data-i18n="pro.lead2">Bar, fête de village, festival, rassemblement ou soirée privée : voyez les formules et envoyez une demande.</p>
     <a class="btn btn--fire" href="programmateurs.html" data-magnetic data-i18n="pro.cta">Formules et demande de date</a>
   </div>
 </section>
@@ -180,13 +192,41 @@
 
 <footer class="ft">
   <div class="ft__inner wrap">
-    <img class="ft__logo" src="img/logo-will-240.webp" alt="Will" width="240" height="134" loading="lazy">
-    <p>© 2026 Mezcal Nation Prod</p>
-    <p data-i18n="ft.credits">Photos : Gwenaëlle Midoux, Pascal Cordier, Wendy Steenmans (crédits à confirmer). Images d’ambiance générées pour la maquette.</p>
-    <details class="legal">
-      <summary data-i18n="ft.legal">Mentions légales</summary>
-      <p data-i18n="ft.legalText">Éditeur : Mezcal Nation Prod, association (adresse, n° RNA et responsable de publication à compléter). Hébergeur : Vercel Inc., États-Unis (adresse à compléter). Ce site de démonstration n’enregistre aucune donnée : le panier, les réservations et les formulaires sont simulés.</p>
-    </details>
+    <div class="ft__brand">
+      <img class="ft__logo" src="img/logo-will-240.webp" alt="Will" width="240" height="134" loading="lazy" decoding="async">
+      <p data-i18n="ft.tag">Country rock des Ardennes. Label et booking : Mezcal Nation Prod.</p>
+      <p class="ft__mail"><a href="mailto:mezcalnation@gmail.com">mezcalnation@gmail.com</a></p>
+      <p class="ft__next" data-ft-next></p>
+    </div>
+    <nav class="ft__col" aria-label="Plan du site" data-i18n-attr="aria-label:ft.map">
+      <h2 data-i18n="ft.site">Le site</h2>
+      <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+      <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
+      <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
+      <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="ft__col">
+      <h2 data-i18n="ft.listen">Écouter et acheter</h2>
+      <a href="https://open.spotify.com/intl-fr/artist/0YI0hBnUt48gTlXG00BIwg" target="_blank" rel="noopener">Spotify</a>
+      <a href="https://link.deezer.com/s/34xY25h6bq7o1ksjYCkBF" target="_blank" rel="noopener">Deezer</a>
+      <a href="https://www.youtube.com/@willcountryrock" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.helloasso.com/associations/mezcal-nation-prod/boutiques/mezcal-nation-prod-shop" target="_blank" rel="noopener" data-i18n="ft.shop">Boutique HelloAsso</a>
+    </div>
+    <div class="ft__col">
+      <h2 data-i18n="ft.follow">Suivre Will</h2>
+      <a href="https://www.facebook.com/willcountryrock" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/willcountryrock/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.gigstarter.fr/artists/will" target="_blank" rel="noopener">Gigstarter</a>
+    </div>
+    <div class="ft__base">
+      <p>© 2026 Mezcal Nation Prod</p>
+      <p data-i18n="ft.credits">Photos : Gwenaëlle Midoux, Pascal Cordier, Wendy Steenmans (crédits à confirmer). Images d’ambiance générées pour la maquette.</p>
+      <details class="legal">
+        <summary data-i18n="ft.legal">Mentions légales</summary>
+        <p data-i18n="ft.legalText">Éditeur : Mezcal Nation Prod, association (adresse, n° RNA et responsable de publication à compléter). Hébergeur : Vercel Inc., États-Unis (adresse à compléter). Ce site de démonstration n’enregistre aucune donnée : le panier, les réservations et les formulaires sont simulés.</p>
+      </details>
+    </div>
   </div>
 </footer>
 
@@ -200,6 +240,7 @@
     </div>
     <ul class="drawer__list" id="cartList"></ul>
     <div class="drawer__foot">
+      <p class="drawer__demo" data-i18n="cart.demo">Panier de démonstration : la commande se finalise sur la boutique HelloAsso.</p>
       <p class="drawer__line"><span data-i18n="cart.ship">Livraison</span><b data-i18n="cart.free">offerte</b></p>
       <p class="drawer__total"><span>Total</span><b id="cartTotal">0 €</b></p>
       <button type="button" class="btn btn--fire btn--wide" id="checkoutBtn" data-i18n="cart.checkout">Commander</button>
@@ -216,6 +257,10 @@
   </div>
 </div>
 
+<div class="mini mini--float" id="miniFloat" hidden>
+  <button class="mini__btn" type="button" data-mini aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
+  <span class="mini__title" data-mini-title></span>
+</div>
 <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
 
 <script src="js/vendor/gsap.min.js"></script>

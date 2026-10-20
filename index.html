@@ -7,15 +7,19 @@
 <meta name="description" content="Will, chanteur et guitariste country rock des Ardennes. Nouvel EP From Country To Rock, concerts, boutique et booking.">
 <meta property="og:title" content="Will, country rock des Ardennes">
 <meta property="og:description" content="Nouvel EP From Country To Rock, 5 titres. Concerts, boutique et booking.">
-<meta property="og:image" content="img/og-will.jpg">
+<meta property="og:image" content="https://will-midoux-maquette.vercel.app/img/og-will.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:type" content="website">
 <meta name="x-title-en" content="Will, country rock from the French Ardennes">
 <meta name="theme-color" content="#140e0a">
 <link rel="icon" type="image/png" href="img/favicon-64.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preload" href="fonts/fraunces-var.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="fonts/work-sans-var.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" as="image" href="img/grok-hero-cabane-1168.webp" media="(min-width: 700px)">
+<link rel="preload" href="fonts/fraunces.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/work-sans.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/rye.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" as="image" href="img/grok-hero-cabane-1600.webp" media="(min-aspect-ratio: 4/5) and (min-width: 1200px)">
+<link rel="preload" as="image" href="img/grok-hero-cabane-1168.webp" media="(min-aspect-ratio: 4/5) and (max-width: 1199px)">
+<link rel="preload" as="image" href="img/grok-hero-cabane-m-784.webp" media="(max-aspect-ratio: 4/5)">
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{var c=localStorage.getItem('will-calm'),r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(c==='1'||(c===null&&r))d.classList.add('calm');if(sessionStorage.getItem('will-intro')||d.classList.contains('calm'))d.classList.add('no-intro');if(localStorage.getItem('will-lang')==='en')d.lang='en';}catch(e){}})();</script>
 <link rel="stylesheet" href="css/main.css">
 </head>
@@ -27,17 +31,18 @@
   <div class="intro__wood"></div>
   <div class="intro__glow"></div>
   <div class="intro__spark"></div>
-  <img class="intro__logo" src="img/logo-will-480.webp" alt="" width="480" height="267">
-  <button class="intro__skip" type="button" data-i18n="intro.skip">Passer</button>
+  <img decoding="async" class="intro__logo" src="img/logo-will-480.webp" alt="" width="480" height="267">
+  <button class="intro__skip" type="button" tabindex="-1" data-i18n="intro.skip">Passer</button>
 </div>
 <div class="smoke" id="smoke" aria-hidden="true"></div>
 
 <header class="hd" id="hd">
   <a class="hd__logo" href="index.html" aria-label="Will, accueil" data-i18n-attr="aria-label:hd.home">
-    <img src="img/logo-will-240.webp" alt="" width="240" height="134">
+    <img decoding="async" src="img/logo-will-240.webp" alt="" width="240" height="134">
   </a>
   <nav class="hd__nav" aria-label="Navigation principale" data-i18n-attr="aria-label:hd.navlabel">
-    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="index.html#ecouter" data-i18n="nav.listen">Écouter</a>
+    <a href="index.html#musique" data-i18n="nav.shop">Disques et boutique</a>
     <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
     <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
     <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
@@ -45,10 +50,10 @@
   </nav>
   <div class="hd__tools">
     <div class="mini" id="mini" hidden>
-      <button class="mini__btn" type="button" id="miniToggle" aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
-      <span class="mini__title" id="miniTitle"></span>
+      <button class="mini__btn" type="button" id="miniToggle" data-mini aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
+      <span class="mini__title" id="miniTitle" data-mini-title></span>
     </div>
-    <div class="lang" role="group" aria-label="Langue">
+    <div class="lang" role="group" aria-label="Langue" data-i18n-attr="aria-label:lang">
       <button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
     <button class="calm-btn" type="button" id="calmBtn" aria-pressed="false" data-i18n="calm">Mode calme</button>
@@ -62,14 +67,19 @@
 
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menu mobile">
-    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="index.html#ecouter" data-i18n="nav.listen">Écouter</a>
+    <a href="index.html#musique" data-i18n="nav.shop">Disques et boutique</a>
     <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
     <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
     <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
     <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
   </nav>
+  <div class="lang menu__lang" role="group" aria-label="Langue" data-i18n-attr="aria-label:lang">
+    <button type="button" data-lang="fr" aria-pressed="true">Français</button><button type="button" data-lang="en" aria-pressed="false">English</button>
+  </div>
 </div>
 
+<noscript><p class="noscript" data-i18n="noscript">Ce site utilise JavaScript pour la discographie, les dates et le panier. Toute la boutique est sur <a href="https://www.helloasso.com/associations/mezcal-nation-prod/boutiques/mezcal-nation-prod-shop">HelloAsso</a> ; contact : mezcalnation@gmail.com.</p></noscript>
 <main id="contenu">
 
 <!-- HERO -->
@@ -77,7 +87,7 @@
   <div class="hero__bg" data-parallax>
     <picture>
       <source media="(max-aspect-ratio: 4/5)" srcset="img/grok-hero-cabane-m-784.webp">
-      <img src="img/grok-hero-cabane-1168.webp" srcset="img/grok-hero-cabane-800.webp 800w, img/grok-hero-cabane-1168.webp 1168w" sizes="100vw" alt="Une cabane éclairée dans la forêt, un feu de camp devant, à la tombée de la nuit" data-i18n-attr="alt:hero.alt" fetchpriority="high">
+      <img decoding="async" src="img/grok-hero-cabane-1168.webp" srcset="img/grok-hero-cabane-800.webp 800w, img/grok-hero-cabane-1168.webp 1168w, img/grok-hero-cabane-1600.webp 1600w" sizes="100vw" alt="Une cabane éclairée dans la forêt, un feu de camp devant, à la tombée de la nuit" data-i18n-attr="alt:hero.alt" fetchpriority="high">
     </picture>
   </div>
   <div class="hero__fog" aria-hidden="true"><span></span><span></span></div>
@@ -87,25 +97,29 @@
   <div class="hero__inner wrap">
     <div class="hero__text">
       <h1 class="hero__title" id="heroTitle">
-        <img class="hero__logo" src="img/logo-will-896.webp" srcset="img/logo-will-480.webp 480w, img/logo-will-896.webp 896w" sizes="(max-width: 700px) 70vw, 460px" alt="Will" width="896" height="500">
+        <img decoding="async" class="hero__logo" src="img/logo-will-896.webp" srcset="img/logo-will-480.webp 480w, img/logo-will-896.webp 896w" sizes="(max-width: 700px) 70vw, 460px" alt="Will" width="896" height="500">
         <span class="hero__tag" data-split data-i18n="hero.tag">Country rock né dans les Ardennes, le cœur de l’autre côté de l’Atlantique.</span>
       </h1>
-      <p class="hero__sub" data-i18n="hero.sub">Le nouvel EP <em>From Country To Rock</em> est sorti le 12 septembre 2026 : cinq titres, et un premier single, <em>It’s Your Day</em>.</p>
+      <p class="hero__sub" data-i18n="hero.sub">Nouvel EP <em>From Country To Rock</em>, cinq titres et un premier single, <em>It’s Your Day</em>.</p>
       <div class="hero__cta">
-        <button class="btn btn--fire" type="button" data-play="0" data-magnetic><span class="ico-play"></span><span data-i18n="hero.listen">Écouter Will</span></button>
+        <button class="btn btn--fire" type="button" data-play="0" aria-pressed="false" data-magnetic><span class="ico-play"></span><span data-i18n="hero.listen">Écouter <em>A Cabin In The Woods</em></span></button>
         <a class="btn btn--ghost" href="#ep" data-magnetic data-i18n="hero.ep">Découvrir l’EP</a>
       </div>
     </div>
 
-    <aside class="next" id="heroNext" aria-live="polite">
-      <p class="next__label" data-i18n="next.label">Prochain concert</p>
+    <figure class="hero__print" aria-hidden="true">
+      <img decoding="async" src="img/will-portrait-600.webp" srcset="img/will-portrait-600.webp 600w, img/will-portrait-1100.webp 1100w" sizes="(max-width: 1100px) 22vw, 280px" alt="" width="600" height="900">
+    </figure>
+    <aside class="next" id="heroNext" aria-labelledby="nextLabel">
+      <p class="next__label" id="nextLabel" data-i18n="next.label">Prochain concert</p>
       <p class="next__where"><span class="next__city" data-next="city">—</span> <span class="next__venue" data-next="venue"></span></p>
       <p class="next__when" data-next="when"></p>
-      <div class="count" data-countdown aria-label="Compte à rebours" data-i18n-attr="aria-label:count.label">
+      <p class="sr" data-next="sr"></p>
+      <div class="count" data-countdown aria-hidden="true">
         <div><span class="count__n" data-u="d">00</span><span class="count__u" data-i18n="count.d">jours</span></div>
         <div><span class="count__n" data-u="h">00</span><span class="count__u" data-i18n="count.h">heures</span></div>
-        <div><span class="count__n" data-u="m">00</span><span class="count__u" data-i18n="count.m">min</span></div>
-        <div><span class="count__n" data-u="s">00</span><span class="count__u" data-i18n="count.s">s</span></div>
+        <div><span class="count__n" data-u="m">00</span><span class="count__u" data-i18n="count.m">minutes</span></div>
+        <div><span class="count__n" data-u="s">00</span><span class="count__u" data-i18n="count.s">secondes</span></div>
       </div>
       <a class="link" href="concerts.html" data-i18n="next.all">Toutes les dates</a>
     </aside>
@@ -116,18 +130,18 @@
 <!-- EP -->
 <section class="ep" id="ep" aria-labelledby="epTitle">
   <div class="ep__bg" aria-hidden="true">
-    <img src="img/grok-ep-route-1168.webp" srcset="img/grok-ep-route-800.webp 800w, img/grok-ep-route-1168.webp 1168w" sizes="100vw" alt="" loading="lazy">
+    <img decoding="async" src="img/grok-ep-route-1168.webp" srcset="img/grok-ep-route-800.webp 800w, img/grok-ep-route-1168.webp 1168w, img/grok-ep-route-1600.webp 1600w" sizes="100vw" alt="" loading="lazy">
     <div class="ep__tint"></div>
   </div>
   <div class="ep__pin wrap">
     <div class="ep__stage">
       <div class="jewel" id="jewel">
         <div class="disc" id="disc" aria-hidden="true">
-          <img src="img/pochette-from-country-to-rock-400.webp" alt="" loading="lazy">
+          <img decoding="async" src="img/pochette-from-country-to-rock-400.webp" alt="" loading="lazy">
           <span class="disc__hole"></span>
         </div>
         <div class="jewel__case">
-          <img src="img/pochette-from-country-to-rock-800.webp" srcset="img/pochette-from-country-to-rock-400.webp 400w, img/pochette-from-country-to-rock-800.webp 800w, img/pochette-from-country-to-rock-1400.webp 1400w" sizes="(max-width: 900px) 70vw, 34vw" alt="Pochette de l’EP From Country To Rock : le logo de Will au-dessus d’une gare dans la brume" data-i18n-attr="alt:ep.coverAlt" loading="lazy">
+          <img decoding="async" src="img/pochette-from-country-to-rock-800.webp" srcset="img/pochette-from-country-to-rock-400.webp 400w, img/pochette-from-country-to-rock-800.webp 800w, img/pochette-from-country-to-rock-1400.webp 1400w" sizes="(max-width: 900px) 70vw, 34vw" alt="Pochette de l’EP From Country To Rock : le logo de Will au-dessus d’une gare dans la brume" data-i18n-attr="alt:ep.coverAlt" loading="lazy">
           <span class="jewel__shine"></span>
         </div>
       </div>
@@ -138,7 +152,10 @@
       <p class="ep__lead" data-i18n="ep.lead">Cinq titres qui partent de la country et finissent en rock. Le premier single, <em>It’s Your Day</em>, ouvre la route.</p>
       <ul class="tracks">
         <li><span class="tracks__t">It’s Your Day</span><span class="tracks__m" data-i18n="ep.single">premier single</span></li>
-        <li class="tracks__todo"><span class="tracks__t" data-i18n="ep.todo">Quatre autres titres</span><span class="tracks__m" data-i18n="todo">à compléter</span></li>
+        <li class="tracks__todo"><span class="tracks__t" data-i18n="ep.track">Titre à compléter</span><span class="tracks__m" data-i18n="todo">à compléter</span></li>
+        <li class="tracks__todo"><span class="tracks__t" data-i18n="ep.track">Titre à compléter</span><span class="tracks__m" data-i18n="todo">à compléter</span></li>
+        <li class="tracks__todo"><span class="tracks__t" data-i18n="ep.track">Titre à compléter</span><span class="tracks__m" data-i18n="todo">à compléter</span></li>
+        <li class="tracks__todo"><span class="tracks__t" data-i18n="ep.track">Titre à compléter</span><span class="tracks__m" data-i18n="todo">à compléter</span></li>
       </ul>
       <div class="ep__buy">
         <button class="btn btn--fire" type="button" data-add="MN008" data-magnetic><span data-i18n="ep.buy">Ajouter le CD au panier</span> <b>7 €</b></button>
@@ -157,15 +174,16 @@
   <div class="fire__bg" aria-hidden="true">
     <picture>
       <source media="(max-aspect-ratio: 4/5)" srcset="img/grok-feu-de-camp-m-784.webp">
-      <img id="fireImg" src="img/grok-feu-de-camp-1168.webp" srcset="img/grok-feu-de-camp-800.webp 800w, img/grok-feu-de-camp-1168.webp 1168w" sizes="100vw" alt="" loading="lazy">
+      <img decoding="async" id="fireImg" src="img/grok-feu-de-camp-1168.webp" srcset="img/grok-feu-de-camp-800.webp 800w, img/grok-feu-de-camp-1168.webp 1168w, img/grok-feu-de-camp-1600.webp 1600w" sizes="100vw" alt="" loading="lazy">
     </picture>
   </div>
+  <div class="fire__glow" aria-hidden="true"></div>
   <canvas class="embers" id="fireEmbers" aria-hidden="true"></canvas>
   <svg class="wave" id="wave" viewBox="0 0 400 220" aria-hidden="true"><path id="wavePath" d=""/></svg>
   <div class="fire__inner wrap">
     <div class="fire__head">
       <h2 class="h2" id="fireTitle" data-split data-i18n="fire.title">Au coin du feu</h2>
-      <p class="fire__lead" data-i18n="fire.lead">Trois chansons de Will à écouter ici. Lancez-en une : le feu suit la musique.</p>
+      <p class="fire__lead" data-i18n="fire.lead">Trois chansons de Will à écouter ici. Lancez-en une : le feu suit la musique.</p>
     </div>
     <ol class="player" id="player">
       <li class="track" data-track="0">
@@ -180,11 +198,11 @@
       </li>
       <li class="track" data-track="2">
         <button class="track__play" type="button" data-play="2" aria-label="Écouter A Brand New Day"><span class="ico-play"></span></button>
-        <div class="track__body"><span class="track__t">A Brand New Day</span><span class="track__bar"><i></i></span></div>
+        <div class="track__body"><span class="track__t">A Brand New Day <small class="track__al">Not Alone, 2021</small></span><span class="track__bar"><i></i></span></div>
         <span class="track__time">1:15</span>
       </li>
     </ol>
-    <p class="fine" data-i18n="fire.note">Extraits de 75 secondes. Le son ne démarre que si vous appuyez sur lecture.</p>
+    <p class="fine" data-i18n="fire.note">Extraits de 75 secondes.</p>
   </div>
 </section>
 
@@ -194,10 +212,18 @@
     <h2 class="h2" id="discoTitle" data-split data-i18n="disco.title">Les disques</h2>
     <p class="disco__lead" data-i18n="disco.lead">Trois albums solo, un EP, un single de Noël et les deux disques de Mezcal. CD ou numérique, port offert.</p>
   </div>
-  <div class="disco__track" id="discoTrack" tabindex="0" aria-label="Discographie, faire défiler horizontalement" data-i18n-attr="aria-label:disco.scroll">
+  <div class="disco__track" id="discoTrack" role="region" tabindex="0" aria-label="Discographie, faire défiler horizontalement" data-i18n-attr="aria-label:disco.scroll">
     <div class="disco__rail" id="discoRail"><!-- rempli par le script à partir de data/catalogue.js --></div>
   </div>
   <p class="disco__more wrap"><a class="link" href="https://www.helloasso.com/associations/mezcal-nation-prod/boutiques/mezcal-nation-prod-shop" target="_blank" rel="noopener" data-i18n="disco.shop">Voir la boutique Mezcal Nation Prod sur HelloAsso</a></p>
+</section>
+
+<!-- INTERLUDE : les mots de Will -->
+<section class="quote" aria-label="Citation de Will" data-i18n-attr="aria-label:quote.label">
+  <div class="wrap">
+    <p class="quote__text" id="quoteText" data-i18n="quote.text">« Attiré comme un aimant par les USA, la culture américaine, ses grands espaces et par cette sensation irrémédiable de liberté… »</p>
+    <p class="quote__by" data-i18n="quote.by">Extrait de la biographie de Will</p>
+  </div>
 </section>
 
 <!-- HISTOIRE -->
@@ -207,10 +233,10 @@
       <h2 class="h2 story__title" id="storyTitle" data-split data-i18n="story.title">La route de Will</h2>
       <div class="story__photos">
         <figure class="print print--a" data-speed="-0.08">
-          <img src="img/will-portrait-1100.webp" srcset="img/will-portrait-600.webp 600w, img/will-portrait-1100.webp 1100w, img/will-portrait-1700.webp 1700w" sizes="(max-width: 900px) 60vw, 26vw" alt="Will au chant, chapeau de cowboy et guitare, en noir et blanc" data-i18n-attr="alt:story.alt1" loading="lazy">
+          <img decoding="async" src="img/will-portrait-1100.webp" srcset="img/will-portrait-600.webp 600w, img/will-portrait-1100.webp 1100w, img/will-portrait-1700.webp 1700w" sizes="(max-width: 900px) 60vw, 26vw" alt="Will au chant, chapeau de cowboy et guitare, en noir et blanc" data-i18n-attr="alt:story.alt1" loading="lazy">
         </figure>
         <figure class="print print--b" data-speed="0.06">
-          <img src="img/will-live-mouzon-2024-700.webp" srcset="img/will-live-mouzon-2024-700.webp 700w, img/will-live-mouzon-2024-1300.webp 1300w" sizes="(max-width: 900px) 45vw, 18vw" alt="Will en concert à la Fête de la Moto de Mouzon, 2024" data-i18n-attr="alt:story.alt2" loading="lazy">
+          <img decoding="async" src="img/will-live-mouzon-2024-700.webp" srcset="img/will-live-mouzon-2024-700.webp 700w, img/will-live-mouzon-2024-1300.webp 1300w" sizes="(max-width: 900px) 45vw, 18vw" alt="Will en concert à la Fête de la Moto de Mouzon, 2024" data-i18n-attr="alt:story.alt2" loading="lazy">
           <figcaption>Mouzon, 2024</figcaption>
         </figure>
       </div>
@@ -223,9 +249,9 @@
           <span class="step__year">1992</span>
           <div class="step__body">
             <h3 data-i18n="story.s1t">Les premières chansons</h3>
-            <p data-i18n="story.s1">Originaire des Ardennes, passionné de musique depuis l’enfance, Will commence à chanter et à composer. Ses premières armes : le hard-rock et le métal, avec plusieurs albums en groupe.</p>
+            <p data-i18n="story.s1">Originaire des Ardennes, passionné de musique depuis l’enfance, Will commence à chanter et à composer. Ses premières armes : le hard-rock et le métal, avec plusieurs albums en groupe.</p>
           </div>
-          <img class="step__img" src="img/grok-histoire-1992-club-784.webp" alt="" loading="lazy">
+          <figure class="step__img amb"><img decoding="async" src="img/grok-histoire-1992-club-784.webp" alt="" loading="lazy"><figcaption data-i18n="amb">Image d’ambiance</figcaption></figure>
         </li>
         <li class="step" data-year="2013">
           <span class="step__year">2013</span>
@@ -233,7 +259,7 @@
             <h3 data-i18n="story.s2t">Cap sur la country</h3>
             <p data-i18n="story.s2">Attiré par l’Amérique, ses grands espaces et son goût de liberté, il devient chanteur guitariste de Mezcal, groupe ardennais de country rock.</p>
           </div>
-          <img class="step__img" src="img/grok-histoire-2013-grange-784.webp" alt="" loading="lazy">
+          <figure class="step__img amb"><img decoding="async" src="img/grok-histoire-2013-grange-784.webp" alt="" loading="lazy"><figcaption data-i18n="amb">Image d’ambiance</figcaption></figure>
         </li>
         <li class="step" data-year="2015">
           <span class="step__year">2015</span>
@@ -241,7 +267,7 @@
             <h3>White &amp; Red</h3>
             <p data-i18n="story.s3">Premier album studio de Mezcal, douze titres.</p>
           </div>
-          <img class="step__img step__img--cover" src="img/pochette-mezcal-white-and-red-300.webp" alt="Pochette de White &amp; Red" loading="lazy">
+          <img decoding="async" class="step__img step__img--cover" src="img/pochette-mezcal-white-and-red-300.webp" alt="Pochette de White &amp; Red" loading="lazy">
         </li>
         <li class="step" data-year="2017">
           <span class="step__year">2017</span>
@@ -249,7 +275,7 @@
             <h3>Live Unplugged</h3>
             <p data-i18n="story.s4">Un live acoustique enregistré en première partie de Ian Scott.</p>
           </div>
-          <img class="step__img step__img--cover" src="img/pochette-mezcal-live-unplugged-300.webp" alt="Pochette de Live Unplugged" loading="lazy">
+          <img decoding="async" class="step__img step__img--cover" src="img/pochette-mezcal-live-unplugged-300.webp" alt="Pochette de Live Unplugged" loading="lazy">
         </li>
         <li class="step" data-year="2019">
           <span class="step__year">2019</span>
@@ -257,7 +283,7 @@
             <h3 data-i18n="story.s5t">Second Life, en solo</h3>
             <p data-i18n="story.s5">Après 25 ans d’aventures en groupe, Will se lance seul, sans compromis. Premier album, dix titres, en mai.</p>
           </div>
-          <img class="step__img" src="img/grok-histoire-2019-porche-784.webp" alt="" loading="lazy">
+          <figure class="step__img amb"><img decoding="async" src="img/grok-histoire-2019-porche-784.webp" alt="" loading="lazy"><figcaption data-i18n="amb">Image d’ambiance</figcaption></figure>
         </li>
         <li class="step" data-year="2021">
           <span class="step__year">2021</span>
@@ -265,7 +291,7 @@
             <h3>Not Alone</h3>
             <p data-i18n="story.s6">Deuxième album, onze titres, sorti le 29 mai.</p>
           </div>
-          <img class="step__img step__img--cover" src="img/pochette-not-alone-400.webp" alt="Pochette de Not Alone" loading="lazy">
+          <img decoding="async" class="step__img step__img--cover" src="img/pochette-not-alone-400.webp" alt="Pochette de Not Alone" loading="lazy">
         </li>
         <li class="step" data-year="2023">
           <span class="step__year">2023</span>
@@ -273,7 +299,7 @@
             <h3>Share</h3>
             <p data-i18n="story.s7">Après des concerts en France, en Belgique et en Allemagne, un troisième album fait de rencontres, de duos et de collaborations.</p>
           </div>
-          <img class="step__img step__img--cover" src="img/pochette-share-400.webp" alt="Pochette de Share" loading="lazy">
+          <img decoding="async" class="step__img step__img--cover" src="img/pochette-share-400.webp" alt="Pochette de Share" loading="lazy">
         </li>
         <li class="step" data-year="2026">
           <span class="step__year">2026</span>
@@ -281,32 +307,32 @@
             <h3>From Country To Rock</h3>
             <p data-i18n="story.s8">Un EP de cinq titres, sorti le 12 septembre.</p>
           </div>
-          <img class="step__img step__img--cover" src="img/pochette-from-country-to-rock-400.webp" alt="Pochette de From Country To Rock" loading="lazy">
+          <img decoding="async" class="step__img step__img--cover" src="img/pochette-from-country-to-rock-400.webp" alt="Pochette de From Country To Rock" loading="lazy">
         </li>
       </ol>
-      <p class="trail__end" data-i18n="story.end">En électrique, en acoustique ou en duo, Will vous dit : à bientôt… sur les planches !</p>
+      <p class="trail__end" data-i18n="story.end">En électrique, en acoustique ou en duo, Will vous dit : à bientôt… sur les planches !</p>
     </div>
   </div>
 </section>
 
 <!-- W-TEAM -->
 <section class="team" id="w-team" aria-labelledby="teamTitle">
-  <div class="team__bg" aria-hidden="true"><img src="img/grok-team-scene-ampoules-1168.webp" srcset="img/grok-team-scene-ampoules-800.webp 800w, img/grok-team-scene-ampoules-1168.webp 1168w" sizes="100vw" alt="" loading="lazy"></div>
+  <div class="team__bg" aria-hidden="true"><img decoding="async" src="img/grok-team-scene-ampoules-1168.webp" srcset="img/grok-team-scene-ampoules-800.webp 800w, img/grok-team-scene-ampoules-1168.webp 1168w, img/grok-team-scene-ampoules-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"></div>
   <div class="team__inner wrap">
     <h2 class="h2" id="teamTitle" data-split>The W-Team</h2>
     <p class="team__lead" data-i18n="team.lead">Sur scène en électrique, Will est entouré de trois musiciens.</p>
     <ul class="board">
       <li class="pin pin--1">
-        <figure><img src="img/will-portrait-600.webp" alt="Willy « Will » Midoux" loading="lazy"><figcaption><b>Willy « Will » Midoux</b><span data-i18n="team.will">Chant, guitare</span></figcaption></figure>
+        <figure><img decoding="async" src="img/team-will-live-464.webp" alt="Willy « Will » Midoux" loading="lazy"><figcaption><b data-i18n="team.name">Willy « Will » Midoux</b><span data-i18n="team.will">Chant, guitare</span></figcaption></figure>
       </li>
       <li class="pin pin--2">
-        <figure><img src="img/team-bruno-henry-480.webp" srcset="img/team-bruno-henry-480.webp 480w, img/team-bruno-henry-900.webp 900w" sizes="(max-width: 700px) 45vw, 22vw" alt="Bruno Henry" loading="lazy"><figcaption><b>Bruno Henry</b><span data-i18n="team.bruno">Guitares</span></figcaption></figure>
+        <figure><img decoding="async" src="img/team-bruno-henry-480.webp" srcset="img/team-bruno-henry-480.webp 480w, img/team-bruno-henry-900.webp 900w" sizes="(max-width: 700px) 45vw, 22vw" alt="Bruno Henry" loading="lazy"><figcaption><b>Bruno Henry</b><span data-i18n="team.bruno">Guitares</span></figcaption></figure>
       </li>
       <li class="pin pin--3">
-        <figure><img src="img/team-martial-boucher-480.webp" srcset="img/team-martial-boucher-480.webp 480w, img/team-martial-boucher-900.webp 900w" sizes="(max-width: 700px) 45vw, 22vw" alt="Martial Boucher" loading="lazy"><figcaption><b>Martial Boucher</b><span data-i18n="team.martial">Basse</span></figcaption></figure>
+        <figure><img decoding="async" src="img/team-martial-boucher-480.webp" srcset="img/team-martial-boucher-480.webp 480w, img/team-martial-boucher-900.webp 900w" sizes="(max-width: 700px) 45vw, 22vw" alt="Martial Boucher" loading="lazy"><figcaption><b>Martial Boucher</b><span data-i18n="team.martial">Basse</span></figcaption></figure>
       </li>
       <li class="pin pin--4">
-        <figure><img src="img/team-yannick-pierre-388.webp" alt="Yannick Pierre" loading="lazy"><figcaption><b>Yannick Pierre</b><span data-i18n="team.yannick">Batterie</span></figcaption></figure>
+        <figure><img decoding="async" src="img/team-yannick-pierre-388.webp" alt="Yannick Pierre" loading="lazy"><figcaption><b>Yannick Pierre</b><span data-i18n="team.yannick">Batterie</span></figcaption></figure>
       </li>
     </ul>
   </div>
@@ -314,7 +340,7 @@
 
 <!-- VIDÉOS -->
 <section class="videos" id="videos" aria-labelledby="videosTitle">
-  <div class="videos__bg" aria-hidden="true"><img src="img/grok-videos-grange-projecteur-1168.webp" srcset="img/grok-videos-grange-projecteur-800.webp 800w, img/grok-videos-grange-projecteur-1168.webp 1168w" sizes="100vw" alt="" loading="lazy"></div>
+  <div class="videos__bg" aria-hidden="true"><img decoding="async" src="img/grok-videos-grange-projecteur-1168.webp" srcset="img/grok-videos-grange-projecteur-800.webp 800w, img/grok-videos-grange-projecteur-1168.webp 1168w, img/grok-videos-grange-projecteur-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"></div>
   <div class="videos__inner wrap">
     <div class="videos__head">
       <h2 class="h2" id="videosTitle" data-split data-i18n="videos.title">En images</h2>
@@ -322,25 +348,25 @@
     </div>
     <div class="vids">
       <article class="vid vid--big">
-        <button class="vid__btn" type="button" data-yt="1I2TWCF4TOc" aria-label="Lire la vidéo live" data-i18n-attr="aria-label:videos.play1">
-          <img src="img/video-live-1I2TWCF4TOc-1280.webp" srcset="img/video-live-1I2TWCF4TOc-640.webp 640w, img/video-live-1I2TWCF4TOc-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 60vw" alt="" loading="lazy">
+        <button class="vid__btn" type="button" data-yt="1I2TWCF4TOc" data-title="Will en live" aria-label="Lire la vidéo live" data-i18n-attr="aria-label:videos.play1">
+          <img decoding="async" src="img/video-live-1I2TWCF4TOc-1280.webp" srcset="img/video-live-1I2TWCF4TOc-640.webp 640w, img/video-live-1I2TWCF4TOc-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 60vw" alt="" loading="lazy">
           <span class="vid__play"><span class="ico-play"></span></span>
         </button>
-        <h3 data-i18n="videos.v1">Will en live</h3>
+        <h3 data-i18n="videos.v1">Will en live</h3><p class="vid__meta" data-i18n="videos.m1">En électrique avec la W-Team, en plein air</p>
       </article>
       <article class="vid">
-        <button class="vid__btn" type="button" data-yt="k6432pH9cOg" aria-label="Lire la vidéo Not Alone" data-i18n-attr="aria-label:videos.play2">
-          <img src="img/pochette-not-alone-800.webp" alt="" loading="lazy">
+        <button class="vid__btn" type="button" data-yt="k6432pH9cOg" data-title="A Brand New Day" aria-label="Lire A Brand New Day" data-i18n-attr="aria-label:videos.play2">
+          <img decoding="async" src="img/pochette-not-alone-800.webp" alt="" loading="lazy">
           <span class="vid__play"><span class="ico-play"></span></span>
         </button>
-        <h3>Not Alone</h3>
+        <h3>A Brand New Day</h3><p class="vid__meta" data-i18n="videos.m2">Extrait de l’album <em>Not Alone</em>, 2021</p>
       </article>
       <article class="vid">
-        <button class="vid__btn" type="button" data-yt="SawUSxkSM_E" aria-label="Lire la vidéo Second Life" data-i18n-attr="aria-label:videos.play3">
-          <img src="img/pochette-second-life-800.webp" alt="" loading="lazy">
+        <button class="vid__btn" type="button" data-yt="SawUSxkSM_E" data-title="Second Life" aria-label="Lire Second Life" data-i18n-attr="aria-label:videos.play3">
+          <img decoding="async" src="img/pochette-second-life-800.webp" alt="" loading="lazy">
           <span class="vid__play"><span class="ico-play"></span></span>
         </button>
-        <h3>Second Life</h3>
+        <h3>Second Life</h3><p class="vid__meta" data-i18n="videos.m3">Le titre qui donne son nom au premier album solo, 2019</p>
       </article>
     </div>
     <p class="fine" data-i18n="videos.note">Les vidéos YouTube ne se chargent qu’au clic.</p>
@@ -349,7 +375,6 @@
 
 <!-- CONCERTS (aperçu) -->
 <section class="gigs" id="concerts" aria-labelledby="gigsTitle">
-  <div class="gigs__bg" aria-hidden="true"><img src="img/grok-foule-contre-jour-1168.webp" srcset="img/grok-foule-contre-jour-800.webp 800w, img/grok-foule-contre-jour-1168.webp 1168w" sizes="100vw" alt="" loading="lazy"></div>
   <div class="gigs__inner wrap">
     <div class="gigs__text">
       <h2 class="h2" id="gigsTitle" data-split data-i18n="gigs.title">Sur la route</h2>
@@ -365,10 +390,10 @@
 
 <!-- MERCH -->
 <section class="merch" id="boutique" aria-labelledby="merchTitle">
-  <div class="merch__bg" aria-hidden="true"><img src="img/grok-merch-etabli-1168.webp" srcset="img/grok-merch-etabli-800.webp 800w, img/grok-merch-etabli-1168.webp 1168w" sizes="100vw" alt="" loading="lazy"></div>
+  <div class="merch__bg" aria-hidden="true"><img decoding="async" src="img/grok-merch-etabli-1168.webp" srcset="img/grok-merch-etabli-800.webp 800w, img/grok-merch-etabli-1168.webp 1168w, img/grok-merch-etabli-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"></div>
   <div class="merch__inner wrap">
     <div class="merch__head">
-      <h2 class="h2" id="merchTitle" data-split data-i18n="merch.title">À accrocher à vos clés</h2>
+      <h2 class="h2" id="merchTitle" data-split data-i18n="merch.title">À accrocher à vos clés</h2>
       <p data-i18n="merch.lead">Deux porte-clés, port offert.</p>
     </div>
     <ul class="keys" id="keys"><!-- rempli par le script --></ul>
@@ -377,10 +402,10 @@
 
 <!-- PROGRAMMATEURS -->
 <section class="pro" id="programmer" aria-labelledby="proTitle">
-  <div class="pro__img"><img src="img/grok-formule-electrique-784.webp" alt="" loading="lazy"></div>
+  <div class="pro__img amb"><img decoding="async" src="img/grok-formule-electrique-784.webp" alt="" loading="lazy"><span class="amb__tag" data-i18n="amb">Image d’ambiance</span></div>
   <div class="pro__text">
     <h2 class="h2" id="proTitle" data-split data-i18n="pro.title">Programmer Will</h2>
-    <p data-i18n="pro.lead">Bars, fêtes, festivals, rassemblements motos ou soirées privées : Will joue ses compositions en électrique avec la W-Team, en acoustique ou en duo, jusqu’à 90 minutes.</p>
+    <p data-i18n="pro.lead">Bars, fêtes, festivals, rassemblements motos ou soirées privées : Will joue ses compositions en électrique avec la W-Team, en acoustique ou en duo, jusqu’à 90 minutes.</p>
     <a class="btn btn--fire" href="programmateurs.html" data-magnetic data-i18n="pro.cta">Formules et demande de date</a>
   </div>
 </section>
@@ -390,18 +415,19 @@
   <div class="contact__bg" aria-hidden="true">
     <picture>
       <source media="(max-aspect-ratio: 4/5)" srcset="img/grok-contact-fenetre-nuit-m-784.webp">
-      <img src="img/grok-contact-fenetre-nuit-1168.webp" srcset="img/grok-contact-fenetre-nuit-800.webp 800w, img/grok-contact-fenetre-nuit-1168.webp 1168w" sizes="100vw" alt="" loading="lazy">
+      <img decoding="async" src="img/grok-contact-fenetre-nuit-1168.webp" srcset="img/grok-contact-fenetre-nuit-800.webp 800w, img/grok-contact-fenetre-nuit-1168.webp 1168w, img/grok-contact-fenetre-nuit-1600.webp 1600w" sizes="100vw" alt="" loading="lazy">
     </picture>
     <div class="contact__light"></div>
   </div>
   <div class="contact__inner wrap">
     <h2 class="h2" id="contactTitle" data-split data-i18n="contact.title">Écrire à Will</h2>
-    <p data-i18n="contact.lead">Label et booking : Mezcal Nation Prod.</p>
+    <p data-i18n="contact.lead">Label et booking : Mezcal Nation Prod.</p>
     <p class="contact__mail"><a href="mailto:mezcalnation@gmail.com" class="burn" data-burn>mezcalnation@gmail.com</a></p>
     <ul class="socials">
       <li><a href="https://www.facebook.com/willcountryrock" target="_blank" rel="noopener">Facebook</a></li>
       <li><a href="https://www.instagram.com/willcountryrock/" target="_blank" rel="noopener">Instagram</a></li>
       <li><a href="https://www.youtube.com/@willcountryrock" target="_blank" rel="noopener">YouTube</a></li>
+      <li><a href="https://open.spotify.com/intl-fr/artist/0YI0hBnUt48gTlXG00BIwg" target="_blank" rel="noopener">Spotify</a></li>
       <li><a href="https://www.gigstarter.fr/artists/will" target="_blank" rel="noopener">Gigstarter</a></li>
     </ul>
   </div>
@@ -411,13 +437,41 @@
 
 <footer class="ft">
   <div class="ft__inner wrap">
-    <img class="ft__logo" src="img/logo-will-240.webp" alt="Will" width="240" height="134" loading="lazy">
-    <p>© 2026 Mezcal Nation Prod</p>
-    <p data-i18n="ft.credits">Photos : Gwenaëlle Midoux, Pascal Cordier, Wendy Steenmans (crédits à confirmer). Images d’ambiance générées pour la maquette.</p>
-    <details class="legal">
-      <summary data-i18n="ft.legal">Mentions légales</summary>
-      <p data-i18n="ft.legalText">Éditeur : Mezcal Nation Prod, association (adresse, n° RNA et responsable de publication à compléter). Hébergeur : Vercel Inc., États-Unis (adresse à compléter). Ce site de démonstration n’enregistre aucune donnée : le panier, les réservations et les formulaires sont simulés.</p>
-    </details>
+    <div class="ft__brand">
+      <img class="ft__logo" src="img/logo-will-240.webp" alt="Will" width="240" height="134" loading="lazy" decoding="async">
+      <p data-i18n="ft.tag">Country rock des Ardennes. Label et booking : Mezcal Nation Prod.</p>
+      <p class="ft__mail"><a href="mailto:mezcalnation@gmail.com">mezcalnation@gmail.com</a></p>
+      <p class="ft__next" data-ft-next></p>
+    </div>
+    <nav class="ft__col" aria-label="Plan du site" data-i18n-attr="aria-label:ft.map">
+      <h2 data-i18n="ft.site">Le site</h2>
+      <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+      <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
+      <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
+      <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="ft__col">
+      <h2 data-i18n="ft.listen">Écouter et acheter</h2>
+      <a href="https://open.spotify.com/intl-fr/artist/0YI0hBnUt48gTlXG00BIwg" target="_blank" rel="noopener">Spotify</a>
+      <a href="https://link.deezer.com/s/34xY25h6bq7o1ksjYCkBF" target="_blank" rel="noopener">Deezer</a>
+      <a href="https://www.youtube.com/@willcountryrock" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.helloasso.com/associations/mezcal-nation-prod/boutiques/mezcal-nation-prod-shop" target="_blank" rel="noopener" data-i18n="ft.shop">Boutique HelloAsso</a>
+    </div>
+    <div class="ft__col">
+      <h2 data-i18n="ft.follow">Suivre Will</h2>
+      <a href="https://www.facebook.com/willcountryrock" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/willcountryrock/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.gigstarter.fr/artists/will" target="_blank" rel="noopener">Gigstarter</a>
+    </div>
+    <div class="ft__base">
+      <p>© 2026 Mezcal Nation Prod</p>
+      <p data-i18n="ft.credits">Photos : Gwenaëlle Midoux, Pascal Cordier, Wendy Steenmans (crédits à confirmer). Images d’ambiance générées pour la maquette.</p>
+      <details class="legal">
+        <summary data-i18n="ft.legal">Mentions légales</summary>
+        <p data-i18n="ft.legalText">Éditeur : Mezcal Nation Prod, association (adresse, n° RNA et responsable de publication à compléter). Hébergeur : Vercel Inc., États-Unis (adresse à compléter). Ce site de démonstration n’enregistre aucune donnée : le panier, les réservations et les formulaires sont simulés.</p>
+      </details>
+    </div>
   </div>
 </footer>
 
@@ -431,6 +485,7 @@
     </div>
     <ul class="drawer__list" id="cartList"></ul>
     <div class="drawer__foot">
+      <p class="drawer__demo" data-i18n="cart.demo">Panier de démonstration : la commande se finalise sur la boutique HelloAsso.</p>
       <p class="drawer__line"><span data-i18n="cart.ship">Livraison</span><b data-i18n="cart.free">offerte</b></p>
       <p class="drawer__total"><span>Total</span><b id="cartTotal">0 €</b></p>
       <button type="button" class="btn btn--fire btn--wide" id="checkoutBtn" data-i18n="cart.checkout">Commander</button>
@@ -447,6 +502,10 @@
   </div>
 </div>
 
+<div class="mini mini--float" id="miniFloat" hidden>
+  <button class="mini__btn" type="button" data-mini aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
+  <span class="mini__title" data-mini-title></span>
+</div>
 <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
 <audio id="audio" preload="none"></audio>
 

@@ -23,7 +23,7 @@ export class Player {
       if (idx !== this.i || !this.a.duration) return;
       const r = bar.getBoundingClientRect(); this.a.currentTime = ((e.clientX - r.left) / r.width) * this.a.duration;
     }));
-    const mini = $('#miniToggle'); if (mini) mini.addEventListener('click', () => this.toggle(this.i));
+    $$('[data-mini]').forEach((m) => m.addEventListener('click', () => this.toggle(this.i)));
   }
   on(fn) { this.listeners.push(fn); }
   emit() { this.listeners.forEach((fn) => fn(this)); }
@@ -69,8 +69,10 @@ export class Player {
       const b = li.querySelector('.track__play');
       b.setAttribute('aria-label', (on ? t('Mettre en pause ', 'Pause ') : t('Écouter ', 'Play ')) + TRACKS[li.dataset.track].title);
     });
-    $$('[data-play]').forEach((b) => { if (!b.classList.contains('track__play')) b.classList.toggle('is-playing', Number(b.dataset.play) === this.i && this.playing); });
-    const mini = $('#mini');
-    if (mini) { mini.hidden = this.i < 0 || (!this.playing && this.a.ended); $('#miniTitle').textContent = this.i >= 0 ? TRACKS[this.i].title : ''; mini.classList.toggle('is-playing', this.playing); $('#miniToggle').innerHTML = this.playing ? '<span class="ico-pause"></span>' : '<span class="ico-play"></span>'; $('#miniToggle').setAttribute('aria-label', this.playing ? t('Pause', 'Pause') : t('Lecture', 'Play')); }
+    $$('[data-play]').forEach((b) => { const on = Number(b.dataset.play) === this.i && this.playing; b.setAttribute('aria-pressed', String(on)); if (!b.classList.contains('track__play')) b.classList.toggle('is-playing', on); });
+    const show = this.i >= 0 && !(this.a.ended);
+    $$('#mini, #miniFloat').forEach((m) => { m.hidden = !show; m.classList.toggle('is-playing', this.playing); });
+    $$('[data-mini-title]').forEach((el) => { el.textContent = this.i >= 0 ? TRACKS[this.i].title : ''; });
+    $$('[data-mini]').forEach((b) => { b.innerHTML = this.playing ? '<span class="ico-pause"></span>' : '<span class="ico-play"></span>'; b.setAttribute('aria-label', (this.playing ? t('Mettre en pause ', 'Pause ') : t('Reprendre ', 'Resume ')) + (this.i >= 0 ? TRACKS[this.i].title : '')); });
   }
 }

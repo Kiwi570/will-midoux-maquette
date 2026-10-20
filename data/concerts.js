@@ -55,7 +55,7 @@ export const scenes = [
   { name: 'Journée Country', city: 'Rouvroy-sur-Audry (08)' },
   { name: "Les Soirées Inoubliables d'Argy", city: 'Argy' },
   { name: 'Au Bureau', city: 'Charleville-Mézières (08)' },
-  { name: 'Concert privé', city: 'Sprimont (Belgique)' },
+  { name: 'Concert privé', name_en: 'Private concert', city: 'Sprimont (Belgique)', city_en: 'Sprimont (Belgium)' },
 ];
 
 // Fuseau horaire des concerts (France).

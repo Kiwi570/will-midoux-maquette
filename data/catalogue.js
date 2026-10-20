@@ -38,7 +38,7 @@ export const releases = [
   },
   {
     id: 'christmas', title: "It's Time For Christmas", artist: 'Will', year: 2021,
-    type: { fr: 'Single, versions anglaise et française (« C’est Noël Ce Soir »)', en: 'Single, English and French versions (“C’est Noël Ce Soir”)' }, cover: 'pochette-its-time-for-christmas', coverSizes: [300],
+    type: { fr: 'Single, versions anglaise et française (« C’est Noël Ce Soir »)', en: 'Single, English and French versions (“C’est Noël Ce Soir”)' }, cover: 'pochette-its-time-for-christmas', coverSizes: [300],
     products: [{ id: 'MN005D', format: 'digital', price: 2, note: { fr: 'Les 2 versions + pochette + paroles', en: 'Both versions + cover + lyrics' } }],
     links: {},
   },
@@ -69,7 +69,7 @@ export const releases = [
 
 export const merch = [
   { id: 'MNM001', title: { fr: 'Porte-clés Will', en: 'Will keyring' }, detail: { fr: 'Acier brossé, gravure laser, livré avec son anneau.', en: 'Brushed steel, laser engraved, ring included.' }, price: 4, img: 'porte-cles-acier', size: 300 },
-  { id: 'MNM002', title: { fr: 'Porte-clés « Share »', en: '“Share” keyring' }, detail: { fr: 'Cuir de cactus, livré avec son anneau.', en: 'Cactus leather, ring included.' }, price: 4, img: 'porte-cles-cuir-cactus', size: 208 },
+  { id: 'MNM002', title: { fr: 'Porte-clés « Share »', en: '“Share” keyring' }, detail: { fr: 'Cuir de cactus, livré avec son anneau.', en: 'Cactus leather, ring included.' }, price: 4, img: 'porte-cles-cuir-cactus', size: 208 },
 ];
 
 // Index de tous les articles vendables, par référence HelloAsso.
@@ -77,7 +77,7 @@ export const products = {};
 for (const r of releases) for (const p of r.products) {
   products[p.id] = {
     id: p.id, price: p.price, img: r.cover, imgSize: r.coverSizes[0],
-    title: { fr: `${r.artist === 'Will' ? '' : r.artist + ' – '}${r.title} (${p.format === 'cd' ? 'CD' : 'numérique'})`, en: `${r.artist === 'Will' ? '' : r.artist + ' – '}${r.title} (${p.format === 'cd' ? 'CD' : 'digital'})` },
+    title: { fr: `${r.artist === 'Will' ? '' : r.artist + ' – '}${r.title} (${p.format === 'cd' ? 'CD' : 'numérique'})`, en: `${r.artist === 'Will' ? '' : r.artist + ' – '}${r.title} (${p.format === 'cd' ? 'CD' : 'digital'})` },
   };
 }
 for (const m of merch) products[m.id] = { id: m.id, price: m.price, img: m.img, imgSize: m.size, title: m.title };
