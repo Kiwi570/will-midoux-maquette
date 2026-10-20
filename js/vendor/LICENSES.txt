@@ -1,0 +1,4 @@
+GSAP 3.15 (gsap.min.js, ScrollTrigger.min.js, SplitText.min.js) : GreenSock Standard License, https://gsap.com/standard-license
+Lenis 1.3.27 : MIT, darkroom.engineering
+OGL 1.0.11 : Unlicense / MIT, oframe
+Polices : Fraunces, Rye, Work Sans, SIL Open Font License (voir dossier fonts)

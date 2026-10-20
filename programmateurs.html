@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Programmer Will : formules et demande de date</title>
+<meta name="description" content="Programmer Will en électrique, en acoustique ou en duo : formules, kit presse et demande de date.">
+<meta property="og:title" content="Programmer Will : formules et demande de date">
+<meta property="og:description" content="Programmer Will en électrique, en acoustique ou en duo : formules, kit presse et demande de date.">
+<meta property="og:image" content="img/og-will.jpg">
+<meta property="og:type" content="website">
+<meta name="x-title-en" content="Book Will: line-ups and date request">
+<meta name="theme-color" content="#140e0a">
+<link rel="icon" type="image/png" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" href="fonts/fraunces-var.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/work-sans-var.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" as="image" href="img/grok-prog-scene-bar-1168.webp" media="(min-width: 700px)">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var c=localStorage.getItem('will-calm'),r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(c==='1'||(c===null&&r))d.classList.add('calm');if(sessionStorage.getItem('will-intro')||d.classList.contains('calm'))d.classList.add('no-intro');if(localStorage.getItem('will-lang')==='en')d.lang='en';}catch(e){}})();</script>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body class="page-booking" data-page="booking">
+<a class="skip" href="#contenu" data-i18n="skip">Aller au contenu</a>
+
+<div class="smoke" id="smoke" aria-hidden="true"></div>
+
+<header class="hd" id="hd">
+  <a class="hd__logo" href="index.html" aria-label="Will, accueil" data-i18n-attr="aria-label:hd.home">
+    <img src="img/logo-will-240.webp" alt="" width="240" height="134">
+  </a>
+  <nav class="hd__nav" aria-label="Navigation principale" data-i18n-attr="aria-label:hd.navlabel">
+    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
+    <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
+    <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
+    <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+  <div class="hd__tools">
+    <div class="mini" id="mini" hidden>
+      <button class="mini__btn" type="button" id="miniToggle" aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
+      <span class="mini__title" id="miniTitle"></span>
+    </div>
+    <div class="lang" role="group" aria-label="Langue">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button class="calm-btn" type="button" id="calmBtn" aria-pressed="false" data-i18n="calm">Mode calme</button>
+    <button class="cart-btn" type="button" id="cartBtn" aria-label="Ouvrir le panier" data-i18n-attr="aria-label:cart.open" data-magnetic>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.2l2.1 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L20.5 8H6.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></svg>
+      <span class="cart-btn__n" id="cartCount">0</span>
+    </button>
+    <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu mobile">
+    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
+    <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
+    <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
+    <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+</div>
+
+<main id="contenu">
+
+<section class="phero phero--stage" aria-labelledby="pTitle">
+  <div class="phero__bg" aria-hidden="true">
+    <picture>
+      <source media="(max-aspect-ratio: 4/5)" srcset="img/grok-prog-scene-bar-m-784.webp">
+      <img id="stageImg" src="img/grok-prog-scene-bar-1168.webp" srcset="img/grok-prog-scene-bar-800.webp 800w, img/grok-prog-scene-bar-1168.webp 1168w" sizes="100vw" alt="" fetchpriority="high">
+    </picture>
+  </div>
+  <div class="bulbs" id="bulbs" aria-hidden="true"></div>
+  <div class="phero__shade" aria-hidden="true"></div>
+  <div class="phero__inner wrap">
+    <h1 class="phero__title" id="pTitle" data-split data-i18n="b.title">Programmer Will</h1>
+    <p class="phero__lead" data-i18n="b.lead">Country rock, 100 % compositions. En électrique avec la W-Team, en acoustique ou en duo, pour les bars, les fêtes, les festivals, les rassemblements et les soirées privées.</p>
+    <div class="hero__cta">
+      <a class="btn btn--fire" href="#demande" data-magnetic data-i18n="b.ask">Demander une date</a>
+      <a class="btn btn--ghost" href="#formules" data-magnetic data-i18n="b.forms">Voir les formules</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="whyTitle">
+  <div class="wrap">
+    <div class="pitch">
+      <div>
+        <h2 class="h2" id="whyTitle" data-split data-i18n="b.why">Une dose de rock’n’country</h2>
+        <p class="pitch__q" data-i18n="b.pitch">Des chansons qui racontent la vie, l’amour, l’amitié, le labeur, la sueur, les rêves et l’espoir. Sur scène, un moment de voyage et de liberté, sans prétention, qui emmène le public de l’autre côté de l’Atlantique.</p>
+      </div>
+      <aside>
+        <p data-i18n="b.sound">Pour situer le son : Jason Aldean, Kip Moore, Brad Paisley, Eric Church.</p>
+        <p data-i18n="b.ref">Déjà sur scène en France, en Belgique et en Allemagne. Avec Mezcal, première partie de Ian Scott en 2017.</p>
+        <p data-i18n="b.price">Tarif : sur devis, selon la formule, la durée, le matériel et le trajet.</p>
+      </aside>
+    </div>
+    <div class="facts" id="facts">
+      <div class="fact"><b data-count="1992">1992</b><span data-i18n="b.f1">premières chansons écrites</span></div>
+      <div class="fact"><b data-count="3">3</b><span data-i18n="b.f2">albums solo et un EP, de 2019 à 2026</span></div>
+      <div class="fact"><b data-count="3">3</b><span data-i18n="b.f3">pays : France, Belgique, Allemagne</span></div>
+      <div class="fact"><b data-count="90">90</b><span data-i18n="b.f4">minutes de concert au maximum</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--alt" id="formules" aria-labelledby="formTitle">
+  <div class="wrap">
+    <h2 class="h2" id="formTitle" data-split data-i18n="b.formsTitle">Trois formules</h2>
+    <p data-i18n="b.formsLead">Retournez une carte pour voir le détail.</p>
+    <div class="forms">
+      <div class="flip">
+        <div class="flip__in">
+          <article class="flip__face flip__front">
+            <img src="img/grok-formule-electrique-784.webp" alt="" loading="lazy">
+            <h3 data-i18n="b.e">Électrique</h3>
+            <p data-i18n="b.eLead">Will et la W-Team, quatre musiciens sur scène.</p>
+            <button type="button" class="btn btn--ghost flip__btn" data-flip data-i18n="b.more">Le détail</button>
+          </article>
+          <article class="flip__face flip__back">
+            <h3 data-i18n="b.e">Électrique</h3>
+            <dl>
+              <dt data-i18n="b.lineup">Sur scène</dt><dd data-i18n="b.eLine">Willy « Will » Midoux (chant, guitare), Bruno Henry (guitares), Martial Boucher (basse), Yannick Pierre (batterie).</dd>
+              <dt data-i18n="b.length">Durée</dt><dd data-i18n="b.len">Jusqu’à 90 minutes.</dd>
+              <dt data-i18n="b.tech">Besoins techniques</dt><dd data-i18n="b.techTxt">Nous consulter. Fiche technique <span class="todo">à compléter</span>.</dd>
+            </dl>
+            <button type="button" class="btn btn--ghost flip__btn" data-flip data-i18n="b.back">Retour</button>
+          </article>
+        </div>
+      </div>
+      <div class="flip">
+        <div class="flip__in">
+          <article class="flip__face flip__front">
+            <img src="img/grok-formule-acoustique-784.webp" alt="" loading="lazy">
+            <h3 data-i18n="b.a">Acoustique</h3>
+            <p data-i18n="b.aLead">Les chansons de Will, au plus près du public.</p>
+            <button type="button" class="btn btn--ghost flip__btn" data-flip data-i18n="b.more">Le détail</button>
+          </article>
+          <article class="flip__face flip__back">
+            <h3 data-i18n="b.a">Acoustique</h3>
+            <dl>
+              <dt data-i18n="b.lineup">Sur scène</dt><dd data-i18n="b.aLine">Formation <span class="todo">à compléter</span>.</dd>
+              <dt data-i18n="b.length">Durée</dt><dd data-i18n="b.len">Jusqu’à 90 minutes.</dd>
+              <dt data-i18n="b.tech">Besoins techniques</dt><dd data-i18n="b.techTxt">Nous consulter. Fiche technique <span class="todo">à compléter</span>.</dd>
+            </dl>
+            <button type="button" class="btn btn--ghost flip__btn" data-flip data-i18n="b.back">Retour</button>
+          </article>
+        </div>
+      </div>
+      <div class="flip">
+        <div class="flip__in">
+          <article class="flip__face flip__front">
+            <img src="img/grok-formule-duo-784.webp" alt="" loading="lazy">
+            <h3 data-i18n="b.d">Duo acoustique</h3>
+            <p data-i18n="b.dLead">Deux guitares, pour les lieux intimes.</p>
+            <button type="button" class="btn btn--ghost flip__btn" data-flip data-i18n="b.more">Le détail</button>
+          </article>
+          <article class="flip__face flip__back">
+            <h3 data-i18n="b.d">Duo acoustique</h3>
+            <dl>
+              <dt data-i18n="b.lineup">Sur scène</dt><dd data-i18n="b.dLine">Will et un second musicien (<span class="todo">à compléter</span>).</dd>
+              <dt data-i18n="b.length">Durée</dt><dd data-i18n="b.len">Jusqu’à 90 minutes.</dd>
+              <dt data-i18n="b.tech">Besoins techniques</dt><dd data-i18n="b.techTxt">Nous consulter. Fiche technique <span class="todo">à compléter</span>.</dd>
+            </dl>
+            <button type="button" class="btn btn--ghost flip__btn" data-flip data-i18n="b.back">Retour</button>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="kit" aria-labelledby="kitTitle">
+  <div class="wrap kit">
+    <figure><img src="img/grok-prog-ampli-detail-1168.webp" srcset="img/grok-prog-ampli-detail-800.webp 800w, img/grok-prog-ampli-detail-1168.webp 1168w" sizes="(max-width: 900px) 100vw, 45vw" alt="" loading="lazy"></figure>
+    <div>
+      <h2 class="h2" id="kitTitle" data-split data-i18n="b.kit">Kit presse</h2>
+      <p data-i18n="b.kitLead">Tout ce qu’il faut pour annoncer la date.</p>
+      <ul class="dl">
+        <li><span><span data-i18n="b.k1">Biographie en français</span><small data-i18n="b.k1s">Texte, à copier dans vos supports</small></span><button type="button" class="chip" data-dl="bio-fr" data-i18n="b.get">Télécharger</button></li>
+        <li><span><span data-i18n="b.k2">Biographie en anglais</span><small data-i18n="b.k2s">Pour les lieux en Belgique et en Allemagne</small></span><button type="button" class="chip" data-dl="bio-en" data-i18n="b.get">Télécharger</button></li>
+        <li><span><span data-i18n="b.k3">Logo Will</span><small data-i18n="b.k3s">PNG, fond transparent</small></span><a class="chip" href="img/logo-will-512.png" download="will-logo.png" data-i18n="b.get">Télécharger</a></li>
+        <li><span><span data-i18n="b.k4">Photo de scène</span><small data-i18n="b.k4s">Crédits photo à mentionner</small></span><a class="chip" href="img/will-portrait-1700.webp" download="will-photo-scene.webp" data-i18n="b.get">Télécharger</a></li>
+        <li><span><span data-i18n="b.k5">Fiche technique</span><small class="todo" data-i18n="todo">à compléter</small></span><button type="button" class="chip" disabled data-i18n="b.soon">Bientôt</button></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--alt" id="demande" aria-labelledby="askTitle">
+  <div class="wrap ask">
+    <div>
+      <h2 class="h2" id="askTitle" data-split data-i18n="b.askTitle">Demander une date</h2>
+      <p data-i18n="b.askLead">Quatre questions, une minute. Vous pouvez aussi écrire directement à <a class="link" href="mailto:mezcalnation@gmail.com">mezcalnation@gmail.com</a> ou passer par <a class="link" href="https://www.gigstarter.fr/artists/will" target="_blank" rel="noopener">Gigstarter</a>.</p>
+      <figure><img src="img/grok-prog-carnet-de-route-1168.webp" srcset="img/grok-prog-carnet-de-route-800.webp 800w, img/grok-prog-carnet-de-route-1168.webp 1168w" sizes="(max-width: 900px) 100vw, 40vw" alt="" loading="lazy"></figure>
+    </div>
+    <form class="wiz" id="wiz" novalidate>
+      <ol class="wiz__steps" id="wizSteps">
+        <li aria-current="step" data-i18n="b.s1">1. L’événement</li>
+        <li data-i18n="b.s2">2. Date et lieu</li>
+        <li data-i18n="b.s3">3. La formule</li>
+        <li data-i18n="b.s4">4. Vos coordonnées</li>
+      </ol>
+      <div class="fuse" aria-hidden="true"><span class="fuse__burnt" id="fuseBurnt"></span><span class="fuse__spark" id="fuseSpark"></span></div>
+
+      <fieldset data-step="0">
+        <legend data-i18n="b.q1">Quel type d’événement ?</legend>
+        <div class="opts">
+          <div class="opt"><input type="radio" name="type" id="t1" value="bar"><label for="t1" data-i18n="b.o1">Bar ou restaurant</label></div>
+          <div class="opt"><input type="radio" name="type" id="t2" value="festival"><label for="t2" data-i18n="b.o2">Festival</label></div>
+          <div class="opt"><input type="radio" name="type" id="t3" value="fete"><label for="t3" data-i18n="b.o3">Fête de village ou de la musique</label></div>
+          <div class="opt"><input type="radio" name="type" id="t4" value="moto"><label for="t4" data-i18n="b.o4">Rassemblement motos</label></div>
+          <div class="opt"><input type="radio" name="type" id="t5" value="prive"><label for="t5" data-i18n="b.o5">Soirée privée</label></div>
+          <div class="opt"><input type="radio" name="type" id="t6" value="autre"><label for="t6" data-i18n="b.o6">Autre</label></div>
+        </div>
+      </fieldset>
+
+      <fieldset data-step="1" hidden>
+        <legend data-i18n="b.q2">Quand et où ?</legend>
+        <div class="field"><label for="fDate" data-i18n="b.date">Date souhaitée</label><input type="date" id="fDate" name="date"></div>
+        <div class="field"><label for="fCity" data-i18n="b.city">Ville</label><input type="text" id="fCity" name="city" autocomplete="address-level2"></div>
+        <div class="field"><label for="fVenue" data-i18n="b.venue">Nom du lieu (facultatif)</label><input type="text" id="fVenue" name="venue"></div>
+      </fieldset>
+
+      <fieldset data-step="2" hidden>
+        <legend data-i18n="b.q3">Quelle formule ?</legend>
+        <div class="opts">
+          <div class="opt"><input type="radio" name="formula" id="f1" value="electrique"><label for="f1" data-i18n="b.e">Électrique</label></div>
+          <div class="opt"><input type="radio" name="formula" id="f2" value="acoustique"><label for="f2" data-i18n="b.a">Acoustique</label></div>
+          <div class="opt"><input type="radio" name="formula" id="f3" value="duo"><label for="f3" data-i18n="b.d">Duo acoustique</label></div>
+          <div class="opt"><input type="radio" name="formula" id="f4" value="conseil"><label for="f4" data-i18n="b.o7">Conseillez-moi</label></div>
+        </div>
+        <div class="field"><label for="fGear" data-i18n="b.gear">Matériel déjà sur place</label>
+          <select id="fGear" name="gear">
+            <option value="" data-i18n="b.g0">Choisir</option>
+            <option value="aucun" data-i18n="b.g1">Rien, il faut tout prévoir</option>
+            <option value="sono" data-i18n="b.g2">Une sono</option>
+            <option value="sono-lumiere" data-i18n="b.g3">Sono et lumières</option>
+            <option value="scene" data-i18n="b.g4">Scène équipée complète</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset data-step="3" hidden>
+        <legend data-i18n="b.q4">Comment vous joindre ?</legend>
+        <div class="field"><label for="fName" data-i18n="b.name">Nom</label><input type="text" id="fName" name="name" autocomplete="name"></div>
+        <div class="field"><label for="fMail" data-i18n="b.mail">E-mail</label><input type="email" id="fMail" name="email" autocomplete="email"></div>
+        <div class="field"><label for="fPhone" data-i18n="b.phone">Téléphone (facultatif)</label><input type="tel" id="fPhone" name="phone" autocomplete="tel"></div>
+        <div class="field"><label for="fMsg" data-i18n="b.msg">Un mot sur l’événement (facultatif)</label><textarea id="fMsg" name="msg"></textarea></div>
+      </fieldset>
+
+      <div data-step="4" hidden id="wizDone"></div>
+
+      <p class="wiz__err" id="wizErr" role="alert"></p>
+      <div class="wiz__nav">
+        <button type="button" class="btn btn--ghost" id="wizBack" data-i18n="b.prev">Retour</button>
+        <button type="button" class="btn btn--fire" id="wizNext" data-i18n="b.next">Continuer</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="ft">
+  <div class="ft__inner wrap">
+    <img class="ft__logo" src="img/logo-will-240.webp" alt="Will" width="240" height="134" loading="lazy">
+    <p>© 2026 Mezcal Nation Prod</p>
+    <p data-i18n="ft.credits">Photos : Gwenaëlle Midoux, Pascal Cordier, Wendy Steenmans (crédits à confirmer). Images d’ambiance générées pour la maquette.</p>
+    <details class="legal">
+      <summary data-i18n="ft.legal">Mentions légales</summary>
+      <p data-i18n="ft.legalText">Éditeur : Mezcal Nation Prod, association (adresse, n° RNA et responsable de publication à compléter). Hébergeur : Vercel Inc., États-Unis (adresse à compléter). Ce site de démonstration n’enregistre aucune donnée : le panier, les réservations et les formulaires sont simulés.</p>
+    </details>
+  </div>
+</footer>
+
+<!-- Panier (tiroir) -->
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__veil" data-close></div>
+  <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <div class="drawer__head">
+      <h2 id="drawerTitle" data-i18n="cart.title">Votre panier</h2>
+      <button type="button" class="x" data-close aria-label="Fermer" data-i18n-attr="aria-label:close">×</button>
+    </div>
+    <ul class="drawer__list" id="cartList"></ul>
+    <div class="drawer__foot">
+      <p class="drawer__line"><span data-i18n="cart.ship">Livraison</span><b data-i18n="cart.free">offerte</b></p>
+      <p class="drawer__total"><span>Total</span><b id="cartTotal">0 €</b></p>
+      <button type="button" class="btn btn--fire btn--wide" id="checkoutBtn" data-i18n="cart.checkout">Commander</button>
+    </div>
+  </aside>
+</div>
+
+<!-- Modales -->
+<div class="modal" id="modal" hidden>
+  <div class="modal__veil" data-close></div>
+  <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button type="button" class="x" data-close aria-label="Fermer" data-i18n-attr="aria-label:close">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/SplitText.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script type="module" src="js/booking.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Concerts de Will, country rock des Ardennes</title>
+<meta name="description" content="Toutes les dates de concert de Will : prochaines dates, compte à rebours, carte, infos pratiques.">
+<meta property="og:title" content="Concerts de Will, country rock des Ardennes">
+<meta property="og:description" content="Toutes les dates de concert de Will : prochaines dates, compte à rebours, carte, infos pratiques.">
+<meta property="og:image" content="img/og-will.jpg">
+<meta property="og:type" content="website">
+<meta name="x-title-en" content="Will in concert, country rock from the French Ardennes">
+<meta name="theme-color" content="#140e0a">
+<link rel="icon" type="image/png" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" href="fonts/fraunces-var.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/work-sans-var.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" as="image" href="img/grok-concerts-route-nuit-1168.webp" media="(min-width: 700px)">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var c=localStorage.getItem('will-calm'),r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(c==='1'||(c===null&&r))d.classList.add('calm');if(sessionStorage.getItem('will-intro')||d.classList.contains('calm'))d.classList.add('no-intro');if(localStorage.getItem('will-lang')==='en')d.lang='en';}catch(e){}})();</script>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body class="page-concerts" data-page="concerts">
+<a class="skip" href="#contenu" data-i18n="skip">Aller au contenu</a>
+
+<div class="smoke" id="smoke" aria-hidden="true"></div>
+
+<header class="hd" id="hd">
+  <a class="hd__logo" href="index.html" aria-label="Will, accueil" data-i18n-attr="aria-label:hd.home">
+    <img src="img/logo-will-240.webp" alt="" width="240" height="134">
+  </a>
+  <nav class="hd__nav" aria-label="Navigation principale" data-i18n-attr="aria-label:hd.navlabel">
+    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
+    <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
+    <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
+    <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+  <div class="hd__tools">
+    <div class="mini" id="mini" hidden>
+      <button class="mini__btn" type="button" id="miniToggle" aria-label="Pause" data-i18n-attr="aria-label:player.pause"><span class="ico-pause"></span></button>
+      <span class="mini__title" id="miniTitle"></span>
+    </div>
+    <div class="lang" role="group" aria-label="Langue">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button class="calm-btn" type="button" id="calmBtn" aria-pressed="false" data-i18n="calm">Mode calme</button>
+    <button class="cart-btn" type="button" id="cartBtn" aria-label="Ouvrir le panier" data-i18n-attr="aria-label:cart.open" data-magnetic>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.2l2.1 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L20.5 8H6.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></svg>
+      <span class="cart-btn__n" id="cartCount">0</span>
+    </button>
+    <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu mobile">
+    <a href="index.html#musique" data-i18n="nav.music">Musique</a>
+    <a href="concerts.html" data-i18n="nav.concerts">Concerts</a>
+    <a href="index.html#histoire" data-i18n="nav.story">Histoire</a>
+    <a href="programmateurs.html" data-i18n="nav.booking">Programmateurs</a>
+    <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+</div>
+
+<main id="contenu">
+
+<section class="phero phero--road" aria-labelledby="pTitle">
+  <div class="phero__bg" aria-hidden="true">
+    <picture>
+      <source media="(max-aspect-ratio: 4/5)" srcset="img/grok-concerts-route-nuit-m-784.webp">
+      <img id="roadImg" src="img/grok-concerts-route-nuit-1168.webp" srcset="img/grok-concerts-route-nuit-800.webp 800w, img/grok-concerts-route-nuit-1168.webp 1168w" sizes="100vw" alt="" fetchpriority="high">
+    </picture>
+  </div>
+  <canvas class="trails" id="trails" aria-hidden="true"></canvas>
+  <div class="phero__shade" aria-hidden="true"></div>
+  <div class="phero__inner wrap">
+    <h1 class="phero__title" id="pTitle" data-split data-i18n="c.title">Concerts</h1>
+    <p class="phero__lead" data-i18n="c.lead">Toutes les dates de Will, triées toutes seules : ce qui arrive d’abord, ce qui est passé ensuite.</p>
+    <div class="cnext" id="cNext">
+      <p class="next__label" data-i18n="next.label">Prochain concert</p>
+      <p class="cnext__where"><span data-next="city">—</span> <span class="cnext__venue" data-next="venue"></span></p>
+      <p class="next__when" data-next="when"></p>
+      <div class="count big-count" data-countdown aria-label="Compte à rebours" data-i18n-attr="aria-label:count.label">
+        <div><span class="count__n" data-u="d">00</span><span class="count__u" data-i18n="count.d">jours</span></div>
+        <div><span class="count__n" data-u="h">00</span><span class="count__u" data-i18n="count.h">heures</span></div>
+        <div><span class="count__n" data-u="m">00</span><span class="count__u" data-i18n="count.m">min</span></div>
+        <div><span class="count__n" data-u="s">00</span><span class="count__u" data-i18n="count.s">s</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="a-venir" aria-labelledby="upTitle">
+  <div class="wrap upcoming">
+    <div>
+      <h2 class="h2" id="upTitle" data-split data-i18n="c.up">À venir</h2>
+      <ol class="gigs-list" id="upList"></ol>
+    </div>
+    <div class="map" data-map="big"></div>
+  </div>
+</section>
+
+<section class="sec sec--alt evening" id="soiree" aria-labelledby="evTitle">
+  <div class="wrap">
+    <h2 class="h2" id="evTitle" data-split data-i18n="c.ev">Une soirée avec Will</h2>
+    <p data-i18n="c.evLead">Le déroulé type d’un concert. Les horaires précis de chaque date restent à confirmer avec chaque lieu.</p>
+  </div>
+  <div class="evening__line" aria-hidden="true"><i id="evLine"></i></div>
+  <div class="evening__track" id="evTrack" tabindex="0" aria-label="Déroulé d’une soirée, faire défiler" data-i18n-attr="aria-label:c.evScroll">
+    <ol class="evening__rail" id="evRail">
+      <li class="ev">
+        <figure><img src="img/grok-soiree-1-balance-784.webp" alt="" loading="lazy"></figure>
+        <span class="ev__n">1</span>
+        <h3 data-i18n="c.ev1t">Les balances</h3>
+        <p data-i18n="c.ev1">L’après-midi, le son se règle dans la salle vide.</p>
+      </li>
+      <li class="ev">
+        <figure><img src="img/grok-soiree-2-portes-784.webp" alt="" loading="lazy"></figure>
+        <span class="ev__n">2</span>
+        <h3 data-i18n="c.ev2t">L’ouverture des portes</h3>
+        <p data-i18n="c.ev2">Le public arrive. L’heure d’ouverture de chaque lieu est <span class="todo">à compléter</span>.</p>
+      </li>
+      <li class="ev">
+        <figure><img src="img/grok-soiree-3-concert-784.webp" alt="" loading="lazy"></figure>
+        <span class="ev__n">3</span>
+        <h3 data-i18n="c.ev3t">Le concert</h3>
+        <p data-i18n="c.ev3">Jusqu’à 90 minutes de compositions, en électrique avec la W-Team, en acoustique ou en duo.</p>
+      </li>
+      <li class="ev">
+        <figure><img src="img/grok-soiree-4-rappel-784.webp" alt="" loading="lazy"></figure>
+        <span class="ev__n">4</span>
+        <h3 data-i18n="c.ev4t">Le rappel</h3>
+        <p data-i18n="c.ev4">Et une dernière chanson pour la route. Les CD et porte-clés sont aussi en vente sur la boutique en ligne.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="infos" aria-labelledby="infoTitle">
+  <div class="wrap infos">
+    <figure><img src="img/grok-concerts-infos-pratiques-1168.webp" srcset="img/grok-concerts-infos-pratiques-800.webp 800w, img/grok-concerts-infos-pratiques-1168.webp 1168w" sizes="(max-width: 900px) 100vw, 45vw" alt="" loading="lazy"></figure>
+    <div>
+      <h2 class="h2" id="infoTitle" data-split data-i18n="c.info">Infos pratiques</h2>
+      <dl class="qa">
+        <dt data-i18n="c.q1">Horaires</dt>
+        <dd data-i18n="c.a1">L’heure indiquée sur chaque date est celle annoncée par Will. En cas de doute, vérifiez auprès du lieu.</dd>
+        <dt data-i18n="c.q2">Réservation</dt>
+        <dd data-i18n="c.a2">Certaines soirées se font uniquement sur réservation, comme au Juca Ranch : le lien du lieu est indiqué sur la date. Pour les autres, les informations de billetterie sont <span class="todo">à compléter</span>.</dd>
+        <dt data-i18n="c.q3">Accès et stationnement</dt>
+        <dd data-i18n="c.a3">Le bouton « Itinéraire » ouvre la carte du lieu. Les détails de stationnement de chaque salle sont <span class="todo">à compléter</span>.</dd>
+        <dt data-i18n="c.q4">Covoiturage</dt>
+        <dd data-i18n="c.a4">Pour partager la route, le plus simple reste l’événement Facebook de chaque date (lien <span class="todo">à compléter</span>).</dd>
+        <dt data-i18n="c.q5">Bruit et lumière</dt>
+        <dd data-i18n="c.a5">Concerts amplifiés : pensez aux bouchons d’oreilles, surtout pour les enfants.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--alt" id="passes" aria-labelledby="pastTitle">
+  <div class="wrap">
+    <h2 class="h2" id="pastTitle" data-split data-i18n="c.past">Déjà passées</h2>
+    <ol class="gigs-list gigs-list--past" id="pastList"></ol>
+    <h3 class="venues__title" data-i18n="c.venues">Ils ont déjà accueilli Will</h3>
+    <ul class="venues" id="venues"></ul>
+    <p class="fine" data-i18n="c.venuesNote">D’après le profil Gigstarter de Will. En France, en Belgique et en Allemagne ; avec Mezcal, première partie de Ian Scott en 2017.</p>
+  </div>
+</section>
+
+<section class="pro" aria-labelledby="proTitle">
+  <div class="pro__img"><img src="img/grok-formule-duo-784.webp" alt="" loading="lazy"></div>
+  <div class="pro__text">
+    <h2 class="h2" id="proTitle" data-split data-i18n="pro.title2">Une date chez vous ?</h2>
+    <p data-i18n="pro.lead2">Bar, fête de village, festival, rassemblement ou soirée privée : voyez les formules et envoyez une demande.</p>
+    <a class="btn btn--fire" href="programmateurs.html" data-magnetic data-i18n="pro.cta">Formules et demande de date</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="ft">
+  <div class="ft__inner wrap">
+    <img class="ft__logo" src="img/logo-will-240.webp" alt="Will" width="240" height="134" loading="lazy">
+    <p>© 2026 Mezcal Nation Prod</p>
+    <p data-i18n="ft.credits">Photos : Gwenaëlle Midoux, Pascal Cordier, Wendy Steenmans (crédits à confirmer). Images d’ambiance générées pour la maquette.</p>
+    <details class="legal">
+      <summary data-i18n="ft.legal">Mentions légales</summary>
+      <p data-i18n="ft.legalText">Éditeur : Mezcal Nation Prod, association (adresse, n° RNA et responsable de publication à compléter). Hébergeur : Vercel Inc., États-Unis (adresse à compléter). Ce site de démonstration n’enregistre aucune donnée : le panier, les réservations et les formulaires sont simulés.</p>
+    </details>
+  </div>
+</footer>
+
+<!-- Panier (tiroir) -->
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__veil" data-close></div>
+  <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <div class="drawer__head">
+      <h2 id="drawerTitle" data-i18n="cart.title">Votre panier</h2>
+      <button type="button" class="x" data-close aria-label="Fermer" data-i18n-attr="aria-label:close">×</button>
+    </div>
+    <ul class="drawer__list" id="cartList"></ul>
+    <div class="drawer__foot">
+      <p class="drawer__line"><span data-i18n="cart.ship">Livraison</span><b data-i18n="cart.free">offerte</b></p>
+      <p class="drawer__total"><span>Total</span><b id="cartTotal">0 €</b></p>
+      <button type="button" class="btn btn--fire btn--wide" id="checkoutBtn" data-i18n="cart.checkout">Commander</button>
+    </div>
+  </aside>
+</div>
+
+<!-- Modales -->
+<div class="modal" id="modal" hidden>
+  <div class="modal__veil" data-close></div>
+  <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button type="button" class="x" data-close aria-label="Fermer" data-i18n-attr="aria-label:close">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/SplitText.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script type="module" src="js/concerts-page.js"></script>
+</body>
+</html>
