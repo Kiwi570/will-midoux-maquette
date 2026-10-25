@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Programmer Will : formules et demande de date</title>
-<meta name="description" content="Programmer Will en électrique, en acoustique ou en duo : formules, kit presse et demande de date.">
-<meta property="og:title" content="Programmer Will : formules et demande de date">
-<meta property="og:description" content="Programmer Will en électrique, en acoustique ou en duo : formules, kit presse et demande de date.">
+<title>Programmer Will&nbsp;: formules et demande de date</title>
+<meta name="description" content="Programmer Will en électrique, en acoustique ou en duo&nbsp;: formules, kit presse et demande de date.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Programmer Will&nbsp;: formules et demande de date">
+<meta property="og:description" content="Programmer Will en électrique, en acoustique ou en duo&nbsp;: formules, kit presse et demande de date.">
 <meta property="og:image" content="https://will-midoux-maquette.vercel.app/img/og-will.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:type" content="website">
@@ -14,9 +15,8 @@
 <meta name="theme-color" content="#140e0a">
 <link rel="icon" type="image/png" href="img/favicon-64.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preload" href="fonts/fraunces.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="fonts/work-sans.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="fonts/rye.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/work-sans.woff2" as="font" type="font/woff2" crossorigin>
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{var c=localStorage.getItem('will-calm'),r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(c==='1'||(c===null&&r))d.classList.add('calm');if(sessionStorage.getItem('will-intro')||d.classList.contains('calm'))d.classList.add('no-intro');if(localStorage.getItem('will-lang')==='en')d.lang='en';}catch(e){}})();</script>
 <link rel="preload" as="image" href="img/grok-prog-scene-bar-1600.webp" media="(min-aspect-ratio: 4/5) and (min-width: 1200px)">
 <link rel="preload" as="image" href="img/grok-prog-scene-bar-1168.webp" media="(min-aspect-ratio: 4/5) and (max-width: 1199px)">
@@ -51,13 +51,13 @@
     <button class="calm-btn" type="button" id="calmBtn" aria-pressed="false" data-i18n="calm">Mode calme</button>
     <button class="cart-btn" type="button" id="cartBtn" aria-label="Ouvrir le panier" data-i18n-attr="aria-label:cart.open" data-magnetic>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.2l2.1 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L20.5 8H6.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></svg>
-      <span class="cart-btn__n" id="cartCount">0</span>
+      <span class="cart-btn__n" id="cartCount" aria-hidden="true" data-n="0"></span>
     </button>
     <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span></span><span></span></button>
   </div>
 </header>
 
-<div class="menu" id="menu" hidden>
+<div class="menu" id="menu" data-lenis-prevent hidden>
   <nav aria-label="Menu mobile">
     <a href="index.html#ecouter" data-i18n="nav.listen">Écouter</a>
     <a href="index.html#musique" data-i18n="nav.shop">Disques et boutique</a>
@@ -260,7 +260,7 @@
         <div class="field"><label for="fName" data-i18n="b.name">Nom</label><input type="text" id="fName" name="name" autocomplete="name"></div>
         <div class="field"><label for="fMail" data-i18n="b.mail">E-mail</label><input type="email" id="fMail" name="email" autocomplete="email"></div>
         <div class="field"><label for="fPhone" data-i18n="b.phone">Téléphone (facultatif)</label><input type="tel" id="fPhone" name="phone" autocomplete="tel"></div>
-        <div class="field"><label for="fMsg" data-i18n="b.msg">Un mot sur l’événement (facultatif)</label><textarea id="fMsg" name="msg"></textarea></div>
+        <div class="field"><label for="fMsg" data-i18n="b.msg">Un mot sur l’événement (facultatif)</label><textarea data-lenis-prevent id="fMsg" name="msg"></textarea></div>
       </fieldset>
 
       <div data-step="4" hidden id="wizDone"></div>
@@ -317,7 +317,7 @@
 </footer>
 
 <!-- Panier (tiroir) -->
-<div class="drawer" id="drawer" hidden>
+<div class="drawer" id="drawer" data-lenis-prevent hidden>
   <div class="drawer__veil" data-close></div>
   <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
     <div class="drawer__head">
@@ -335,7 +335,7 @@
 </div>
 
 <!-- Modales -->
-<div class="modal" id="modal" hidden>
+<div class="modal" id="modal" data-lenis-prevent hidden>
   <div class="modal__veil" data-close></div>
   <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <button type="button" class="x" data-close aria-label="Fermer" data-i18n-attr="aria-label:close">×</button>

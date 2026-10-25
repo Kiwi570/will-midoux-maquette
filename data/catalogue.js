@@ -37,7 +37,7 @@ export const releases = [
     },
   },
   {
-    id: 'christmas', title: "It's Time For Christmas", artist: 'Will', year: 2021,
+    id: 'christmas', title: "It’s Time For Christmas", artist: 'Will', year: 2021,
     type: { fr: 'Single, versions anglaise et française (« C’est Noël Ce Soir »)', en: 'Single, English and French versions (“C’est Noël Ce Soir”)' }, cover: 'pochette-its-time-for-christmas', coverSizes: [300],
     products: [{ id: 'MN005D', format: 'digital', price: 2, note: { fr: 'Les 2 versions + pochette + paroles', en: 'Both versions + cover + lyrics' } }],
     links: {},

@@ -23,11 +23,11 @@ function placeBulbs() {
 const BIO = {
   'bio-fr': `Will – country rock des Ardennes
 
-Originaire des Ardennes, passionné de musique depuis l'enfance, Willy « Will » Midoux commence à chanter et à composer en 1992. Ses premières armes sont le hard-rock et le métal, avec plusieurs albums en groupe.
+Originaire des Ardennes, passionné de musique depuis l’enfance, Willy « Will » Midoux commence à chanter et à composer en 1992. Ses premières armes sont le hard-rock et le métal, avec plusieurs albums en groupe.
 
 Attiré par les États-Unis, leurs grands espaces et leur sensation de liberté, il se tourne vers la country. En 2013, il devient chanteur guitariste de Mezcal, groupe ardennais de country rock : un album studio de 12 titres, « White And Red » (2015), et un live acoustique, « Live Unplugged », enregistré en 2017 en première partie de Ian Scott.
 
-Après 25 ans en groupe, Will se lance en solo : « Second Life » (mai 2019, 10 titres), « Not Alone » (29 mai 2021, 11 titres), puis « Share » (13 mai 2023, 10 titres), fait de rencontres, de duos et de collaborations, après des concerts en France, en Belgique et en Allemagne. Son EP « From Country To Rock » (5 titres, premier single « It's Your Day ») est sorti le 12 septembre 2026.
+Après 25 ans en groupe, Will se lance en solo : « Second Life » (mai 2019, 10 titres), « Not Alone » (29 mai 2021, 11 titres), puis « Share » (13 mai 2023, 10 titres), fait de rencontres, de duos et de collaborations, après des concerts en France, en Belgique et en Allemagne. Son EP « From Country To Rock » (5 titres, premier single « It’s Your Day ») est sorti le 12 septembre 2026.
 
 En formation électrique avec la W-Team (Bruno Henry aux guitares, Martial Boucher à la basse, Yannick Pierre à la batterie), en acoustique ou en duo acoustique.
 
@@ -35,11 +35,11 @@ Label et booking : Mezcal Nation Prod – mezcalnation@gmail.com
 Crédits photo : Gwenaëlle Midoux, Pascal Cordier, Wendy Steenmans (à confirmer)`,
   'bio-en': `Will – country rock from the French Ardennes
 
-Born and raised in the Ardennes, in France's Grand Est region, Willy "Will" Midoux has loved music since childhood. He started writing and singing his own songs in 1992. His first projects were hard rock and metal, with several albums in that style.
+Born and raised in the Ardennes, in France’s Grand Est region, Willy "Will" Midoux has loved music since childhood. He started writing and singing his own songs in 1992. His first projects were hard rock and metal, with several albums in that style.
 
 Drawn to the United States, its wide open spaces and its sense of freedom, he turned to country music. In 2013 he became the singer and guitarist of MEZCAL, a country rock band from the Ardennes, who released the 12-track studio album "White and Red" (2015) and the acoustic "Live Unplugged", recorded in 2017 while opening for Ian Scott.
 
-After 25 years in bands, Will went solo: "Second Life" (May 2019, 10 tracks), "Not Alone" (May 2021, 11 tracks) and "Share" (13 May 2023, 10 tracks), an album of encounters, duets and collaborations, after shows in France, Belgium and Germany. His EP "From Country To Rock" (5 tracks, lead single "It's Your Day") came out on 12 September 2026.
+After 25 years in bands, Will went solo: "Second Life" (May 2019, 10 tracks), "Not Alone" (May 2021, 11 tracks) and "Share" (13 May 2023, 10 tracks), an album of encounters, duets and collaborations, after shows in France, Belgium and Germany. His EP "From Country To Rock" (5 tracks, lead single "It’s Your Day") came out on 12 September 2026.
 
 On stage with the W-Team (Bruno Henry on guitars, Martial Boucher on bass, Yannick Pierre on drums), acoustic, or as an acoustic duo.
 
@@ -98,7 +98,7 @@ function initWizard() {
     const d = form.fDate.value ? new Intl.DateTimeFormat(state.lang === 'en' ? 'en-GB' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(form.fDate.value + 'T12:00')) : '';
     const gear = form.fGear.options[form.fGear.selectedIndex];
     const rows = [[t('Événement', 'Event'), label('type')], [t('Date', 'Date'), d], [t('Lieu', 'Place'), [form.fVenue.value.trim(), form.fCity.value.trim()].filter(Boolean).join(', ')], [t('Formule', 'Line-up'), label('formula')], [t('Matériel', 'Equipment'), gear && gear.value ? gear.textContent : '—'], [t('Contact', 'Contact'), `${form.fName.value.trim()} · ${form.fMail.value.trim()}${form.fPhone.value.trim() ? ' · ' + form.fPhone.value.trim() : ''}`]];
-    const body = rows.map(([k, v]) => `${k} : ${v}`).join('\n') + (form.fMsg.value.trim() ? `\n\n${form.fMsg.value.trim()}` : '');
+    const body = rows.map(([k, v]) => `${k} : ${v}`).join('\n') + (form.fMsg.value.trim() ? `\n\n${form.fMsg.value.trim()}` : '');
     const mailto = `mailto:mezcalnation@gmail.com?subject=${encodeURIComponent(t('Demande de date pour Will', 'Date request for Will'))}&body=${encodeURIComponent(body)}`;
     $('#wizDone').innerHTML = `<h3 tabindex="-1" style="font-size:1.6rem;color:var(--night)">${t('Demande prête', 'Request ready')}</h3>
       <p class="demo">${t('Démonstration : rien n’a été envoyé. Pour l’envoyer vraiment, ouvrez-la dans votre messagerie.', 'Demo: nothing was sent. To really send it, open it in your email app.')}</p>

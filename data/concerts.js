@@ -34,7 +34,7 @@ export const concerts = [
   {
     date: '2026-11-20', time: '21:00', status: 'ok',
     city: 'Sedan', dept: '08', country: 'France',
-    venue: "Chop N'Rock",
+    venue: "Chop N’Rock",
     lat: 49.7019, lon: 4.9403, label: 'n',
   },
   {
@@ -53,7 +53,7 @@ export const scenes = [
   { name: 'Rassemblement Motos et Mobylettes', city: 'Aubrives (08)' },
   { name: 'Foodtrucks, Beer & Music Fest', city: 'Charleville-Mézières (08)' },
   { name: 'Journée Country', city: 'Rouvroy-sur-Audry (08)' },
-  { name: "Les Soirées Inoubliables d'Argy", city: 'Argy' },
+  { name: "Les Soirées Inoubliables d’Argy", city: 'Argy' },
   { name: 'Au Bureau', city: 'Charleville-Mézières (08)' },
   { name: 'Concert privé', name_en: 'Private concert', city: 'Sprimont (Belgique)', city_en: 'Sprimont (Belgium)' },
 ];

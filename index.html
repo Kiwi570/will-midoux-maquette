@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Will, country rock des Ardennes</title>
 <meta name="description" content="Will, chanteur et guitariste country rock des Ardennes. Nouvel EP From Country To Rock, concerts, boutique et booking.">
+<meta name="robots" content="noindex, nofollow">
 <meta property="og:title" content="Will, country rock des Ardennes">
 <meta property="og:description" content="Nouvel EP From Country To Rock, 5 titres. Concerts, boutique et booking.">
 <meta property="og:image" content="https://will-midoux-maquette.vercel.app/img/og-will.jpg">
@@ -14,14 +15,14 @@
 <meta name="theme-color" content="#140e0a">
 <link rel="icon" type="image/png" href="img/favicon-64.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preload" href="fonts/fraunces.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="fonts/work-sans.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="fonts/rye.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/work-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="img/grok-hero-cabane-1600.webp" media="(min-aspect-ratio: 4/5) and (min-width: 1200px)">
 <link rel="preload" as="image" href="img/grok-hero-cabane-1168.webp" media="(min-aspect-ratio: 4/5) and (max-width: 1199px)">
 <link rel="preload" as="image" href="img/grok-hero-cabane-m-784.webp" media="(max-aspect-ratio: 4/5)">
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{var c=localStorage.getItem('will-calm'),r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(c==='1'||(c===null&&r))d.classList.add('calm');if(sessionStorage.getItem('will-intro')||d.classList.contains('calm'))d.classList.add('no-intro');if(localStorage.getItem('will-lang')==='en')d.lang='en';}catch(e){}})();</script>
 <link rel="stylesheet" href="css/main.css">
+<noscript><style>.intro { display: none; }</style></noscript>
 </head>
 <body class="page-home" data-page="home">
 <a class="skip" href="#contenu" data-i18n="skip">Aller au contenu</a>
@@ -59,13 +60,13 @@
     <button class="calm-btn" type="button" id="calmBtn" aria-pressed="false" data-i18n="calm">Mode calme</button>
     <button class="cart-btn" type="button" id="cartBtn" aria-label="Ouvrir le panier" data-i18n-attr="aria-label:cart.open" data-magnetic>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.2l2.1 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L20.5 8H6.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></svg>
-      <span class="cart-btn__n" id="cartCount">0</span>
+      <span class="cart-btn__n" id="cartCount" aria-hidden="true" data-n="0"></span>
     </button>
     <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span></span><span></span></button>
   </div>
 </header>
 
-<div class="menu" id="menu" hidden>
+<div class="menu" id="menu" data-lenis-prevent hidden>
   <nav aria-label="Menu mobile">
     <a href="index.html#ecouter" data-i18n="nav.listen">Écouter</a>
     <a href="index.html#musique" data-i18n="nav.shop">Disques et boutique</a>
@@ -141,7 +142,7 @@
           <span class="disc__hole"></span>
         </div>
         <div class="jewel__case">
-          <img decoding="async" src="img/pochette-from-country-to-rock-800.webp" srcset="img/pochette-from-country-to-rock-400.webp 400w, img/pochette-from-country-to-rock-800.webp 800w, img/pochette-from-country-to-rock-1400.webp 1400w" sizes="(max-width: 900px) 70vw, 34vw" alt="Pochette de l’EP From Country To Rock : le logo de Will au-dessus d’une gare dans la brume" data-i18n-attr="alt:ep.coverAlt" loading="lazy">
+          <img decoding="async" src="img/pochette-from-country-to-rock-800.webp" srcset="img/pochette-from-country-to-rock-400.webp 400w, img/pochette-from-country-to-rock-800.webp 800w, img/pochette-from-country-to-rock-1400.webp 1400w" sizes="(max-width: 900px) 70vw, 34vw" alt="Pochette de l’EP From Country To Rock&nbsp;: le logo de Will au-dessus d’une gare dans la brume" data-i18n-attr="alt:ep.coverAlt" loading="lazy">
           <span class="jewel__shine"></span>
         </div>
       </div>
@@ -323,7 +324,7 @@
     <p class="team__lead" data-i18n="team.lead">Sur scène en électrique, Will est entouré de trois musiciens.</p>
     <ul class="board">
       <li class="pin pin--1">
-        <figure><img decoding="async" src="img/team-will-live-464.webp" alt="Willy « Will » Midoux" loading="lazy"><figcaption><b data-i18n="team.name">Willy « Will » Midoux</b><span data-i18n="team.will">Chant, guitare</span></figcaption></figure>
+        <figure><img decoding="async" src="img/team-will-live-464.webp" alt="Willy «&nbsp;Will&nbsp;» Midoux" loading="lazy"><figcaption><b data-i18n="team.name">Willy « Will » Midoux</b><span data-i18n="team.will">Chant, guitare</span></figcaption></figure>
       </li>
       <li class="pin pin--2">
         <figure><img decoding="async" src="img/team-bruno-henry-480.webp" srcset="img/team-bruno-henry-480.webp 480w, img/team-bruno-henry-900.webp 900w" sizes="(max-width: 700px) 45vw, 22vw" alt="Bruno Henry" loading="lazy"><figcaption><b>Bruno Henry</b><span data-i18n="team.bruno">Guitares</span></figcaption></figure>
@@ -476,7 +477,7 @@
 </footer>
 
 <!-- Panier (tiroir) -->
-<div class="drawer" id="drawer" hidden>
+<div class="drawer" id="drawer" data-lenis-prevent hidden>
   <div class="drawer__veil" data-close></div>
   <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
     <div class="drawer__head">
@@ -494,7 +495,7 @@
 </div>
 
 <!-- Modales -->
-<div class="modal" id="modal" hidden>
+<div class="modal" id="modal" data-lenis-prevent hidden>
   <div class="modal__veil" data-close></div>
   <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <button type="button" class="x" data-close aria-label="Fermer" data-i18n-attr="aria-label:close">×</button>

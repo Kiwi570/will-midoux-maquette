@@ -25,7 +25,7 @@ function renderDisco() {
   const rots = [-2, 1.6, -1.2, 2.2, -1.8, 1.2, -2.4];
   $('#discoRail').innerHTML = releases.map((r, i) => {
     const srcset = r.coverSizes.map((w) => `img/${r.cover}-${w}.webp ${w}w`).join(', ');
-    const buy = r.products.map((p) => `<button type="button" class="chip" data-add="${p.id}" aria-label="${t('Ajouter au panier', 'Add to basket')} : ${r.title}, ${p.format === 'cd' ? 'CD' : t('numérique', 'digital')}, ${euro(p.price)}">${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')} <b>${euro(p.price)}</b></button>`).join('');
+    const buy = r.products.map((p) => `<button type="button" class="chip" data-add="${p.id}" aria-label="${t('Ajouter au panier', 'Add to basket')} : ${r.title}, ${p.format === 'cd' ? 'CD' : t('numérique', 'digital')}, ${euro(p.price)}">${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')} <b>${euro(p.price)}</b></button>`).join('');
     const links = Object.entries(r.links).map(([k, u]) => `<a href="${u}" target="_blank" rel="noopener">${LINK_NAMES[k]}</a>`).join('');
     return `<article class="rec" data-card data-rot="${rots[i % rots.length]}">
       <div class="rec__print" style="--rot:${rots[i % rots.length]}deg">
@@ -37,7 +37,7 @@ function renderDisco() {
         <h3 class="rec__title">${r.title}</h3>
         <p class="rec__type">${tt(r.type)}</p>
         <div class="rec__buy">${buy}</div>
-        ${r.products.filter((p) => p.note).map((p) => `<p class="rec__note">${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')} : ${tt(p.note)}</p>`).join('')}
+        ${r.products.filter((p) => p.note).map((p) => `<p class="rec__note">${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')}${t(' :', ':')} ${tt(p.note)}</p>`).join('')}
         ${links ? `<div class="rec__links">${links}</div>` : ''}
       </div>
     </article>`;

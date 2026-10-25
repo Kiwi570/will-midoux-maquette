@@ -145,6 +145,9 @@ export class Embers {
 export async function createEmbers(canvas, opts = {}) {
   if (opts.webgl !== false) {
     try {
+      // test préalable : sans WebGL, OGL écrirait une erreur dans la console avant le repli 2D
+      const tc = document.createElement('canvas');
+      if (!(tc.getContext('webgl2') || tc.getContext('webgl'))) throw new Error('no webgl');
       const { Renderer, Program, Geometry, Mesh } = await import('./vendor/ogl.mjs');
       const em = Object.create(Embers.prototype);
       Object.assign(em, { canvas, opts: Object.assign({ count: 600, emitters: [{ x: 0.5, y: 1.02, spread: 1.2, rise: 1.1 }], size: 1, share: 0.5 }, opts), energy: 0, target: 0, running: false, visible: true, t0: performance.now(), mouse: [-9999, -9999] });
@@ -178,7 +181,7 @@ export async function createEmbers(canvas, opts = {}) {
       em.kind = 'webgl';
       return em;
     } catch (e) {
-      console.warn('Braises : passage en canvas 2D', e);
+      /* WebGL indisponible : repli en canvas 2D */
     }
   }
   const em = new Embers(canvas, Object.assign({}, opts, { webgl: false }));

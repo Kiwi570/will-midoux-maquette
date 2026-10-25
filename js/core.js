@@ -63,7 +63,7 @@ function applyLang(lang, first = false) {
 const splits = [];
 export function split(el, type = 'words,chars') {
   if (!window.SplitText) return null;
-  const s = new window.SplitText(el, { type, wordsClass: 'w', charsClass: 'c' });
+  const s = new window.SplitText(el, { type, wordsClass: 'w', charsClass: 'c', aria: 'none' }); // texte lu tel quel
   splits.push(s);
   return s;
 }
@@ -150,12 +150,12 @@ function initHeader() {
   const burger = $('#burger');
   const menu = $('#menu');
   const setInert = (v) => $$('main, footer, .skip, .hd__nav, .hd__logo, #calmBtn, #cartBtn, .hd .lang, .mini').forEach((el) => { el.inert = v; });
-  const close = () => { burger.setAttribute('aria-expanded', 'false'); menu.hidden = true; setInert(false); lenis && lenis.start(); };
+  const close = () => { burger.setAttribute('aria-expanded', 'false'); menu.hidden = true; setInert(false); html.classList.remove('verrou'); lenis && lenis.start(); };
   burger.addEventListener('click', () => {
     const open = burger.getAttribute('aria-expanded') !== 'true';
     burger.setAttribute('aria-expanded', String(open));
     menu.hidden = !open;
-    if (open) { setInert(true); lenis && lenis.stop(); if (gsap && !state.calm) gsap.from('.menu a', { y: 30, opacity: 0, stagger: 0.06, duration: 0.6, ease: 'power3.out' }); menu.querySelector('a').focus(); }
+    if (open) { setInert(true); html.classList.add('verrou'); lenis && lenis.stop(); if (gsap && !state.calm) gsap.from('.menu a', { y: 30, opacity: 0, stagger: 0.06, duration: 0.6, ease: 'power3.out' }); menu.querySelector('a').focus(); }
     else close();
   });
   menu.addEventListener('click', (e) => { if (e.target.closest('a')) close(); });
@@ -172,19 +172,24 @@ function initHeader() {
 
   $$('[data-lang]').forEach((b) => b.addEventListener('click', () => applyLang(b.dataset.lang)));
   $('#calmBtn').addEventListener('click', () => setCalm(!state.calm));
+  // menu ouvert puis fenêtre élargie au-delà du format mobile : on le referme
+  matchMedia('(max-width: 1080px)').addEventListener('change', (e) => { if (!e.matches && !menu.hidden) close(); });
 }
 
 /* ---------------- Liens : ancres et transitions de page ---------------- */
 function initLinks() {
-  const here = location.pathname.split('/').pop() || 'index.html';
+  // avec cleanUrls, l'adresse est « /concerts » quand le lien vaut « concerts.html »
+  const norm = (f) => (f || '').replace(/\.html$/, '').replace(/^index$/, '');
+  const here = norm(location.pathname.split('/').pop());
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
     if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
     const href = a.getAttribute('href');
     if (a.hasAttribute('download') || /^[a-z][a-z0-9+.-]*:/i.test(href)) return;
     const [file, hash] = href.split('#');
-    const samePage = !file || file === here || (file === 'index.html' && (here === '' || here === 'index' || here === 'index.html'));
-    if (samePage && hash) { e.preventDefault(); scrollToEl('#' + hash); history.replaceState(null, '', '#' + hash); return; }
+    const samePage = !file || norm(file) === here;
+    if (samePage && hash) { e.preventDefault(); scrollToEl(document.getElementById(hash)); history.replaceState(null, '', '#' + hash); return; }
+    if (samePage) { e.preventDefault(); scrollToEl(document.getElementById('top') || document.body); return; }
     if (!samePage && gsap && !state.calm) {
       e.preventDefault();
       const sm = $('#smoke'); sm.style.animation = 'none';
@@ -223,6 +228,7 @@ export function openModal(htmlStr, onOpen, returnTo) {
   $('#modalBody').innerHTML = htmlStr;
   lastFocus = returnTo || document.activeElement;
   m.hidden = false;
+  html.classList.add('verrou');
   lenis && lenis.stop();
   if (gsap && !state.calm) gsap.fromTo('.modal__box', { y: 30, opacity: 0, rotate: -1 }, { y: 0, opacity: 1, rotate: 0, duration: 0.5, ease: 'power3.out' });
   const f = m.querySelector('h2, button, a, input'); if (f) { if (f.tagName === 'H2') f.setAttribute('tabindex', '-1'); f.focus(); }
@@ -232,6 +238,7 @@ export function closeModal() {
   const m = $('#modal');
   if (m.hidden) return;
   m.hidden = true; $('#modalBody').innerHTML = '';
+  html.classList.remove('verrou');
   lenis && lenis.start();
   lastFocus && lastFocus.focus();
 }
@@ -253,7 +260,8 @@ function saveCart() { store.set('will-cart', JSON.stringify(cart)); renderCart()
 function cartCount() { return Object.values(cart).reduce((a, b) => a + b, 0); }
 function cartTotal() { return Object.entries(cart).reduce((s, [id, q]) => s + (products[id] ? products[id].price * q : 0), 0); }
 function renderCart() {
-  $('#cartCount').textContent = cartCount();
+  $('#cartCount').dataset.n = cartCount(); // chiffre affiché en contenu généré : hors du nom accessible du bouton
+  $('#cartBtn').setAttribute('aria-label', t('Ouvrir le panier', 'Open the basket') + (cartCount() ? ' (' + cartCount() + ')' : ''));
   const list = $('#cartList');
   const ids = Object.keys(cart).filter((id) => products[id] && cart[id] > 0);
   if (!ids.length) {
@@ -263,7 +271,7 @@ function renderCart() {
       const p = products[id];
       return `<li class="citem" data-id="${id}"><img src="${imgSrc(p.img, p.imgSize)}" alt="" width="64" height="64">
         <div><div class="citem__t">${tt(p.title)}</div><div class="citem__p">${euro(p.price)} · ${t('réf.', 'ref.')} ${id}</div></div>
-        <div class="qty"><button type="button" data-dec aria-label="${t('Retirer un exemplaire', 'Remove one')} : ${tt(p.title)}">−</button><span aria-label="${t('Quantité', 'Quantity')} ${cart[id]}">${cart[id]}</span><button type="button" data-inc aria-label="${t('Ajouter un exemplaire', 'Add one')} : ${tt(p.title)}">+</button></div></li>`;
+        <div class="qty"><button type="button" data-dec aria-label="${t('Retirer un exemplaire', 'Remove one')} : ${tt(p.title)}">−</button><span aria-label="${t('Quantité', 'Quantity')} ${cart[id]}">${cart[id]}</span><button type="button" data-inc aria-label="${t('Ajouter un exemplaire', 'Add one')} : ${tt(p.title)}">+</button></div></li>`;
     }).join('');
   }
   $('#cartTotal').textContent = euro(cartTotal());
@@ -296,13 +304,13 @@ export function addToCart(id, fromEl) {
 }
 function openCart() {
   hideToast();
-  const d = $('#drawer'); renderCart(); d.hidden = false; lastFocus = document.activeElement; lenis && lenis.stop();
+  const d = $('#drawer'); renderCart(); d.hidden = false; lastFocus = document.activeElement; html.classList.add('verrou'); lenis && lenis.stop();
   if (gsap && !state.calm) { gsap.fromTo('.drawer__panel', { xPercent: 100 }, { xPercent: 0, duration: 0.55, ease: 'power3.out' }); gsap.fromTo('.drawer__veil', { opacity: 0 }, { opacity: 1, duration: 0.4 }); }
   d.querySelector('.x').focus();
 }
 function closeCart() {
   const d = $('#drawer'); if (d.hidden) return;
-  const end = () => { d.hidden = true; lenis && lenis.start(); lastFocus && lastFocus.focus(); };
+  const end = () => { d.hidden = true; html.classList.remove('verrou'); lenis && lenis.start(); lastFocus && lastFocus.focus(); };
   if (gsap && !state.calm) { gsap.to('.drawer__panel', { xPercent: 100, duration: 0.4, ease: 'power2.in', onComplete: end }); gsap.to('.drawer__veil', { opacity: 0, duration: 0.35 }); }
   else end();
 }
@@ -499,7 +507,7 @@ function jsonLd() {
     return `${c.date}T${c.time}:00+0${off}:00`;
   };
   const group = {
-    '@type': 'MusicGroup', '@id': '#will', name: 'Will', alternateName: 'Willy « Will » Midoux', genre: ['Country', 'Country rock'],
+    '@type': 'MusicGroup', '@id': '#will', name: 'Will', alternateName: 'Willy « Will » Midoux', genre: ['Country', 'Country rock'],
     foundingLocation: { '@type': 'Place', name: 'Ardennes, France' }, email: 'mezcalnation@gmail.com',
     sameAs: ['https://www.facebook.com/willcountryrock', 'https://www.instagram.com/willcountryrock/', 'https://www.youtube.com/@willcountryrock', 'https://open.spotify.com/artist/0YI0hBnUt48gTlXG00BIwg'],
   };
@@ -521,7 +529,7 @@ export function boot(pageInit) {
   html.classList.toggle('motion', !state.calm);
   applyLang(state.lang, true);
   try { jsonLd(); } catch (e) { /* facultatif */ }
-  const ftNext = () => { const { next } = sortedConcerts(); $$('[data-ft-next]').forEach((el) => { el.innerHTML = next ? `${t('Prochain concert', 'Next concert')} : <a href="concerts.html">${next.city}, ${fmtDate(next.at, { day: 'numeric', month: 'long' })}</a>` : ''; }); };
+  const ftNext = () => { const { next } = sortedConcerts(); $$('[data-ft-next]').forEach((el) => { el.innerHTML = next ? `${t('Prochain concert :', 'Next concert:')} <a href="concerts.html">${next.city}, ${fmtDate(next.at, { day: 'numeric', month: 'long' })}</a>` : ''; }); };
   ftNext(); onLang(ftNext);
   initHeader();
   initLinks();
@@ -531,6 +539,9 @@ export function boot(pageInit) {
   pageInit && pageInit();
   if (!state.calm) { startLenis(); buildMotion(); }
   $$('#calmBtn').forEach((b) => b.setAttribute('aria-pressed', String(state.calm)));
-  if (location.hash && location.hash.length > 1) setTimeout(() => scrollToEl(location.hash), 300);
+  if (location.hash && location.hash.length > 1) {
+    let el = null; try { el = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) { /* ancre invalide */ }
+    if (el) setTimeout(() => scrollToEl(el), 300);
+  }
   window.addEventListener('load', () => ScrollTrigger && ScrollTrigger.refresh());
 }
