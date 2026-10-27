@@ -1,6 +1,6 @@
 // Lecteur d'extraits : le son ne démarre qu'après un clic. Analyse des fréquences
 // pour faire réagir les braises et l'onde gravée autour du feu.
-import { $, $$, t, announce } from './core.js';
+import { $, $$, t, announce } from './core.js?v=20261027';
 
 export const TRACKS = [
   { src: 'audio/a-cabin-in-the-woods-extrait.mp3', title: 'A Cabin In The Woods' },

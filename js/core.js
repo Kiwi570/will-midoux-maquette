@@ -1,8 +1,8 @@
 // Socle commun aux trois pages : langue, défilement fluide, mode calme, curseur,
 // boutons magnétiques, en-tête, transitions de page, panier simulé, modales, dates.
-import { EN } from './i18n.js';
-import { products, SHOP_URL } from '../data/catalogue.js';
-import { concerts } from '../data/concerts.js';
+import { EN } from './i18n.js?v=20261027';
+import { products, SHOP_URL } from '../data/catalogue.js?v=20261027';
+import { concerts } from '../data/concerts.js?v=20261027';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
