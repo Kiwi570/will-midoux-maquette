@@ -1,9 +1,9 @@
 // Page d'accueil : ouverture marquée au fer, hero, EP, lecteur au coin du feu,
 // discographie sur planches, route de l'histoire, W-Team, vidéos, concerts, merch, contact.
-import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, ses, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, euro, fineHover, showHeader, getLenis } from './core.js?v=20261027';
-import { releases, merch, SHOP_URL } from '../data/catalogue.js?v=20261027';
-import { createEmbers } from './embers.js?v=20261027';
-import { Player } from './audio.js?v=20261027';
+import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, ses, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, euro, fineHover, showHeader, getLenis } from './core.js?v=20261028';
+import { releases, merch, SHOP_URL } from '../data/catalogue.js?v=20261028';
+import { createEmbers } from './embers.js?v=20261028';
+import { Player } from './audio.js?v=20261028';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;

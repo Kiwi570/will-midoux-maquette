@@ -1,7 +1,7 @@
 // Page Concerts : dates triées automatiquement, compte à rebours, carte, traînées de phares,
 // ajout au calendrier, réservation simulée, frise d'une soirée.
-import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, openModal, closeModal, announce, fineHover } from './core.js?v=20261027';
-import { scenes } from '../data/concerts.js?v=20261027';
+import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, openModal, closeModal, announce, fineHover } from './core.js?v=20261028';
+import { scenes } from '../data/concerts.js?v=20261028';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;

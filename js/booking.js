@@ -1,6 +1,6 @@
 // Page Programmateurs : ampoules qui s'allument une à une, chiffres qui défilent,
 // cartes de formules qui se retournent, kit presse, demande de date en 4 étapes (mèche qui brûle).
-import { boot, onMotion, onCalm, onLang, state, t, $, $$, split, announce } from './core.js?v=20261027';
+import { boot, onMotion, onCalm, onLang, state, t, $, $$, split, announce } from './core.js?v=20261028';
 
 const gsap = window.gsap;
 const mm = (q) => window.matchMedia(q).matches;
