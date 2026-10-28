@@ -1,9 +1,9 @@
 // Page d'accueil : ouverture marquée au fer, hero, EP, lecteur au coin du feu,
 // discographie sur planches, route de l'histoire, W-Team, vidéos, concerts, merch, contact.
-import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, ses, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, euro, fineHover, showHeader, getLenis } from './core.js?v=20261028';
-import { releases, merch, SHOP_URL } from '../data/catalogue.js?v=20261028';
-import { createEmbers } from './embers.js?v=20261028';
-import { Player } from './audio.js?v=20261028';
+import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, ses, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, euro, fineHover, showHeader, getLenis } from './core.js?v=20261028-2';
+import { releases, merch, SHOP_URL } from '../data/catalogue.js?v=20261028-2';
+import { createEmbers } from './embers.js?v=20261028-2';
+import { Player } from './audio.js?v=20261028-2';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -28,10 +28,10 @@ function renderDisco() {
     const buy = r.products.map((p) => `<button type="button" class="chip" data-add="${p.id}" aria-label="${t('Ajouter au panier', 'Add to basket')} : ${r.title}, ${p.format === 'cd' ? 'CD' : t('numérique', 'digital')}, ${euro(p.price)}">${p.format === 'cd' ? 'CD' : t('Numérique', 'Digital')} <b>${euro(p.price)}</b></button>`).join('');
     const links = Object.entries(r.links).map(([k, u]) => `<a href="${u}" target="_blank" rel="noopener">${LINK_NAMES[k]}</a>`).join('');
     return `<article class="rec" data-card data-rot="${rots[i % rots.length]}">
-      <div class="rec__print" style="--rot:${rots[i % rots.length]}deg">
+      <div class="rec__media"><div class="rec__print" style="--rot:${rots[i % rots.length]}deg">
         <img src="img/${r.cover}-${r.coverSizes[Math.min(1, r.coverSizes.length - 1)]}.webp" srcset="${srcset}" sizes="(max-width: 700px) 70vw, 26vw" alt="${t('Pochette de', 'Cover of')} ${r.title}" loading="lazy" width="400" height="400">
         <span class="rec__year">${r.year}</span>
-      </div>
+      </div></div>
       <div class="rec__info">
         ${r.artist !== 'Will' ? `<span class="rec__artist">${t('avec', 'with')} ${r.artist}</span>` : ''}
         <h3 class="rec__title">${r.title}</h3>
@@ -263,6 +263,8 @@ boot(() => {
     heat.style.cssText = 'position:absolute;inset:0;background:radial-gradient(80% 90% at 75% 60%, rgba(217,69,42,.75), rgba(120,30,14,.55) 55%, rgba(20,14,10,.4));mix-blend-mode:multiply;opacity:0;pointer-events:none';
     $('.ep__bg').appendChild(heat); cleanups.push(() => heat.remove());
     const big = mm('(min-width: 900px)');
+    // épinglée : la section tient dans l'écran, sous l'en-tête mesuré (css .is-pinned)
+    if (big) { ep.classList.add('is-pinned'); cleanups.push(() => ep.classList.remove('is-pinned')); }
     const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: ep, start: 'top top', end: big ? '+=110%' : 'bottom top', pin: big, pinType: PIN_TYPE, scrub: 0.6 } });
     tl.fromTo('#jewel', { rotationY: -30, rotationX: 10, y: big ? 0 : 0 }, { rotationY: 14, rotationX: 0, duration: 1 }, 0)
       .fromTo('#disc', { xPercent: 0, rotation: 0 }, { xPercent: big ? 46 : 28, rotation: 620, duration: 1 }, 0.05)
@@ -282,8 +284,10 @@ boot(() => {
     prints.forEach((p) => gsap.set(p, { rotation: parseFloat(p.closest('.rec').dataset.rot) || 0 }));
     const sway = prints.map((p) => gsap.quickTo(p, 'rotation', { duration: 0.9, ease: 'elastic.out(1, .35)' }));
     const swing = (v) => prints.forEach((p, i) => sway[i]((parseFloat(p.closest('.rec').dataset.rot) || 0) + gsap.utils.clamp(-9, 9, v / -220)));
-    if (big) {
+    // sous 600 px de haut, les cartes n'y tiendraient pas : défilement horizontal natif, comme sur tablette
+    if (big && mm('(min-height: 600px)')) {
       track.style.overflow = 'visible';
+      $('.disco').classList.add('is-pinned');
       const dist = () => Math.max(0, rail.scrollWidth - innerWidth);
       const railTw = gsap.to(rail, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '.disco', start: 'top top', end: () => '+=' + dist(), pin: true, pinType: PIN_TYPE, scrub: 0.8, invalidateOnRefresh: true, onUpdate: (self) => swing(self.getVelocity()) } });
       const onFocus = (e) => {
@@ -294,7 +298,7 @@ boot(() => {
       };
       rail.addEventListener('focusin', onFocus);
       cleanups.push(() => rail.removeEventListener('focusin', onFocus));
-      cleanups.push(() => { track.style.overflow = ''; });
+      cleanups.push(() => { track.style.overflow = ''; $('.disco').classList.remove('is-pinned'); });
     } else {
       let lastX = track.scrollLeft;
       const onS = () => { swing((track.scrollLeft - lastX) * -40); lastX = track.scrollLeft; }; track.addEventListener('scroll', onS, { passive: true });

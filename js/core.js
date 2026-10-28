@@ -1,8 +1,8 @@
 // Socle commun aux trois pages : langue, défilement fluide, mode calme, curseur,
 // boutons magnétiques, en-tête, transitions de page, panier simulé, modales, dates.
-import { EN } from './i18n.js?v=20261028';
-import { products, SHOP_URL } from '../data/catalogue.js?v=20261028';
-import { concerts } from '../data/concerts.js?v=20261028';
+import { EN } from './i18n.js?v=20261028-2';
+import { products, SHOP_URL } from '../data/catalogue.js?v=20261028-2';
+import { concerts } from '../data/concerts.js?v=20261028-2';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -140,6 +140,10 @@ function initHeader() {
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  // hauteur réelle de l'en-tête : les sections épinglées démarrent juste dessous
+  const setH = () => html.style.setProperty('--entete-h', hd.offsetHeight + 'px');
+  setH();
+  if (window.ResizeObserver) new ResizeObserver(setH).observe(hd);
 
   const page = document.body.dataset.page;
   $$('.hd__nav a, .menu a').forEach((a) => {

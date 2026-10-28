@@ -1,7 +1,7 @@
 // Page Concerts : dates triées automatiquement, compte à rebours, carte, traînées de phares,
 // ajout au calendrier, réservation simulée, frise d'une soirée.
-import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, openModal, closeModal, announce, fineHover } from './core.js?v=20261028';
-import { scenes } from '../data/concerts.js?v=20261028';
+import { boot, onMotion, onCalm, onLang, state, t, tt, $, $$, split, sortedConcerts, fmtLong, fmtDate, countdown, renderMap, openModal, closeModal, announce, fineHover } from './core.js?v=20261028-2';
+import { scenes } from '../data/concerts.js?v=20261028-2';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -239,11 +239,12 @@ boot(() => {
     const rail = $('#evRail'), track = $('#evTrack');
     if (mm('(min-width: 900px)')) {
       track.style.overflow = 'visible';
+      $('.evening').classList.add('is-pinned');
       const dist = () => Math.max(0, rail.scrollWidth - innerWidth + 40);
       const tl = gsap.timeline({ scrollTrigger: { trigger: '.evening', start: 'top top', end: () => '+=' + (dist() + innerHeight * 0.4), pin: true, pinType: PIN_TYPE, scrub: 0.7, invalidateOnRefresh: true } });
       tl.to(rail, { x: () => -dist(), ease: 'none' }, 0).to('#evLine', { width: '100%', ease: 'none' }, 0);
       $$('.ev figure img').forEach((img) => gsap.fromTo(img, { scale: 1.25 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.evening', start: 'top top', end: () => '+=' + (dist() + innerHeight * 0.4), scrub: true } }));
-      cleanups.push(() => { track.style.overflow = ''; });
+      cleanups.push(() => { track.style.overflow = ''; $('.evening').classList.remove('is-pinned'); });
     } else {
       gsap.from('.ev', { y: 40, opacity: 0, stagger: 0.1, duration: 0.9, scrollTrigger: { trigger: '.evening', start: 'top 75%' } });
       const onS = () => { $('#evLine').style.width = (track.scrollLeft / Math.max(1, track.scrollWidth - track.clientWidth)) * 100 + '%'; };

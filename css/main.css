@@ -821,3 +821,88 @@ html.verrou { overflow: hidden; }
 main { overflow-x: clip; }
 @media (max-width: 400px) { .phero__title { font-size: clamp(2.6rem, 1.4rem + 8vw, 10rem); } } /* « Programmer » tient dans la largeur à 320 px */
 .cart-btn__n::after { content: attr(data-n); }
+
+/* ---------- Sections épinglées : tout tient dans l'écran (audit) ---------- */
+/* --entete-h est mesurée en JS (core.js) ; la section fait 100svh, le média prend la place restante */
+:root { --entete-h: var(--hd); }
+.ep.is-pinned .ep__pin { height: 100vh; height: 100svh; min-height: 0; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); grid-template-rows: minmax(0, 1fr); padding-top: calc(var(--entete-h) + clamp(8px, 2svh, 32px)); padding-bottom: clamp(12px, 3svh, 48px); }
+.ep.is-pinned .ep__stage { height: 100%; min-height: 0; container-type: size; }
+.ep.is-pinned .jewel { width: min(100cqw, 100cqh, 460px); }
+.ep.is-pinned .ep__title { font-size: min(clamp(3rem, 1.6rem + 6vw, 7.4rem), 11svh); }
+.ep.is-pinned .ep__lead { margin-bottom: clamp(8px, 2svh, 18px); }
+.ep.is-pinned .tracks { margin: clamp(8px, 2svh, 22px) 0; }
+.ep.is-pinned .tracks li { padding-block: clamp(4px, 1.3svh, 14px); }
+.ep.is-pinned .tracks__t { font-size: min(1.3rem, 3svh); line-height: 1.3; }
+
+.disco.is-pinned { height: 100vh; height: 100svh; display: flex; flex-direction: column; padding-top: calc(var(--entete-h) + clamp(8px, 2svh, 24px)); padding-bottom: clamp(8px, 2svh, 20px); }
+.disco.is-pinned .h2 { font-size: min(var(--fs-h2), 11svh); margin-bottom: .1em; }
+.disco.is-pinned .disco__lead { margin-bottom: 0; }
+.disco.is-pinned .disco__track { flex: 1; min-height: 0; display: flex; padding: clamp(14px, 3svh, 40px) 0 clamp(8px, 2svh, 24px); }
+/* deux rangées partagées (sous-grille) : toutes les pochettes ont la même taille, la fiche la plus longue fixe la rangée du bas */
+.disco.is-pinned .disco__rail { height: 100%; display: grid; grid-auto-flow: column; grid-template-rows: minmax(0, 1fr) auto; }
+.disco.is-pinned .rec { display: grid; grid-row: span 2; grid-template-rows: subgrid; }
+.disco.is-pinned .rec--end { display: block; align-self: center; }
+.disco.is-pinned .rec__media { min-height: 0; container-type: size; display: flex; justify-content: center; align-items: flex-end; }
+.disco.is-pinned .rec__print { width: min(100%, 100cqh - 2px); flex: none; }
+.disco.is-pinned .rec__info { margin-top: clamp(18px, 3svh, 26px); }
+.disco.is-pinned .disco__more { margin: 0; }
+
+.evening.is-pinned { height: 100vh; height: 100svh; display: flex; flex-direction: column; padding-block: calc(var(--entete-h) + clamp(8px, 2svh, 24px)) clamp(8px, 2svh, 20px); }
+.evening.is-pinned .h2 { font-size: min(var(--fs-h2), 11svh); margin-bottom: .15em; }
+.evening.is-pinned .wrap p { margin-bottom: clamp(8px, 2svh, 16px); }
+.evening.is-pinned .evening__line { flex: none; margin-bottom: clamp(12px, 3svh, 36px); }
+.evening.is-pinned .evening__track { flex: 1; min-height: 0; display: flex; padding-bottom: 0; }
+.evening.is-pinned .evening__rail { height: 100%; }
+.evening.is-pinned .ev { display: flex; flex-direction: column; container-type: inline-size; }
+.evening.is-pinned .ev figure { flex: 1; min-height: 0; max-height: 125cqw; aspect-ratio: auto; margin-bottom: clamp(8px, 2svh, 18px); }
+.evening.is-pinned .ev__n { font-size: min(2.6rem, 6svh); }
+.evening.is-pinned .ev p { margin-bottom: 0; }
+
+/* écran bas : la fiche passe à côté de la pochette, la pochette suit la hauteur de la piste */
+@media (max-height: 820px) {
+  .disco.is-pinned .disco__track { container-type: size; }
+  .disco.is-pinned .disco__rail { display: flex; align-items: center; }
+  .disco.is-pinned .rec { display: flex; align-items: center; gap: 22px; width: auto; }
+  .disco.is-pinned .rec__media { width: min(360px, 100cqh - 30px); container-type: normal; flex: none; }
+  .disco.is-pinned .rec__print { width: 100%; }
+  .disco.is-pinned .rec__info { width: 290px; flex: none; margin-top: 0; padding: 12px 14px; }
+  .disco.is-pinned .rec__title { font-size: 1.35rem; }
+  .disco.is-pinned .rec__type { margin-bottom: .5em; }
+}
+@media (max-height: 640px) {
+  .ep.is-pinned .kicker { font-size: 1rem; margin-bottom: .3em; }
+  .ep.is-pinned .ep__lead { font-size: 1rem; line-height: 1.45; }
+  .ep.is-pinned .ep__buy { gap: 10px 20px; }
+  .ep.is-pinned .ep__title { font-size: 9svh; }
+  .ep.is-pinned .tracks li { padding-block: .9svh; }
+  .ep.is-pinned .stream a { padding-top: 4px; }
+  .evening.is-pinned .ev p { font-size: .95rem; line-height: 1.45; }
+}
+
+/* ---------- Textes d'au moins 12 px (audit) ---------- */
+.amb__tag, .amb > figcaption { font-size: max(12px, .68rem); }
+.step__img.amb > figcaption { font-size: max(12px, .6rem); }
+.count__u { font-size: max(12px, .72rem); }
+.map__inset .map__city { font-size: 12px; }
+@media (max-width: 560px) {
+  .calm-btn { font-size: max(12px, .72rem); }
+  .lang button { font-size: max(12px, .74rem); }
+}
+
+/* ---------- Grand compte à rebours lisible sur téléphone (audit) ---------- */
+@media (max-width: 560px) {
+  .big-count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .big-count > div { text-align: center; }
+  .big-count .count__n { font-size: clamp(2.2rem, 11vw, 3.4rem); }
+}
+
+/* ---------- Cibles tactiles de 44 px (audit) ---------- */
+.ft__col a { min-height: 44px; }
+.ft__mail a { display: inline-flex; align-items: center; min-height: 44px; }
+.contact__mail a { display: inline-flex; align-items: center; min-height: 44px; }
+.hero__scroll::after { content: ''; position: absolute; inset: -9px; }
+/* colonne d'histoire collante : photos et légende tiennent sous l'en-tête mesuré */
+@media (min-width: 901px) {
+  .story__side { display: flex; flex-direction: column; max-height: calc(100svh - var(--entete-h) - 40px); }
+  .story__photos { flex: 0 1 auto; min-height: 0; }
+}
